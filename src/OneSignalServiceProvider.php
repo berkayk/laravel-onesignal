@@ -41,7 +41,7 @@ class OneSignalServiceProvider extends ServiceProvider
     }
 
     public function provides() {
-        return ['berkayk.onesignal'];
+        return ['onesignal'];
     }
 
 
