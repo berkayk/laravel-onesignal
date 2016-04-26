@@ -27,19 +27,7 @@ class OneSignalClient
         return "APP ID".$this->appId." REST: ".$this->restApiKey;
     }
 
-    private function addApiKey(){
-        $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
-    }
-
-    private function addUser(){
-        $this->headers['headers']['Authorization'] = 'Basic '.$this->userAuthKey;
-    }
-
-    public function addJson(){
-        $this->headers['headers']['Content-Type'] = 'application/json';
-    }
-
-    public function createNotification($parameters = []){
+    public function sendNotification($parameters = []){
         $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
         $this->headers['headers']['Content-Type'] = 'application/json';
         $this->headers['body'] = json_encode($parameters);
@@ -47,7 +35,7 @@ class OneSignalClient
     }
 
     public function post($endPoint) {
-        return $this->client->post(self::API_URL."/".$endPoint);
+        return $this->client->post(self::API_URL."/".$endPoint, $this->headers);
     }
 
 }
