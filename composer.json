@@ -1,6 +1,6 @@
 {
   "name": "berkayk/onesignal-laravel",
-  "description": "OneSignal Push Wrapper Laravel. Uses  https://github.com/norkunas/onesignal-php-api",
+  "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
   "require": {
