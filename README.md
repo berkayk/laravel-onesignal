@@ -1,5 +1,5 @@
 #  OneSignal Push Notifications for Laravel 5
-___
+
 ## Introduction
 
 Before you start installing this service, please complete your OneSignal setup at https://onesignal.com and finish all the steps that is necessary to obtain an application id and REST API Keys.
@@ -10,7 +10,7 @@ Before you start installing this service, please complete your OneSignal setup a
 First, you'll need to require the package with Composer:
 
 ```sh
-composer require composer require berkayk/onesignal-laravel
+composer require berkayk/onesignal-laravel
 ```
 
 Aftwards, run `composer update` from your command line.
