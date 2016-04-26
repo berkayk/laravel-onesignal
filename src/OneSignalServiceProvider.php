@@ -13,10 +13,9 @@ class OneSignalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-        $this->publishes([
-            __DIR__.'/config/onesignal.php' => config_path('onesignal.php'),
-        ]);
+        $configPath = __DIR__ . '/../config/onesignal.php';
+        $this->publishes([$configPath => config_path('onesignal.php')]);
+        $this->mergeConfigFrom($configPath, 'onesignal');
     }
 
     /**
@@ -26,9 +25,7 @@ class OneSignalServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        $this->app->singleton('onesignal', function () {
-
+        $this->app->singleton('onesignal', function ($app) {
             $config = isset($app['config']['services']['onesignal']) ? $app['config']['services']['onesignal'] : null;
             if (is_null($config)) {
                 $config = $app['config']['onesignal'] ?: $app['config']['onesignal::config'];
