@@ -24,7 +24,7 @@ class OneSignalClient
     }
 
     public function testCredentials() {
-        return "APP ID".$this->appId." REST: ".$this->restApiKey;
+        return "APP ID: ".$this->appId." REST: ".$this->restApiKey;
     }
 
     public function sendNotification($parameters = []){

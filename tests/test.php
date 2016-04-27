@@ -2,6 +2,12 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$client = new Berkayk\OneSignal\OneSignalClient("1","2","3");
+$dotenv = new Dotenv\Dotenv(__DIR__."/../");
+$dotenv->load();
+
+$client = new Berkayk\OneSignal\OneSignalClient(
+    getenv('APP_ID'),
+    getenv('REST_API_KEY'),
+    getenv('USER_AUTH_KEY'));
 
 echo $client->testCredentials();
