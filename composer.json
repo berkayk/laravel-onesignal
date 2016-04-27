@@ -9,6 +9,9 @@
     "illuminate/support": "4.*|5.*",
     "symfony/psr-http-message-bridge": "^0.2.0"
   },
+  "require-dev": {
+    "vlucas/phpdotenv": "^2.2"
+  },
   "autoload": {
     "psr-4": {
       "Berkayk\\OneSignal\\": "src/"
