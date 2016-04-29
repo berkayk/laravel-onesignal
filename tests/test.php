@@ -11,3 +11,4 @@ $client = new Berkayk\OneSignal\OneSignalClient(
     getenv('USER_AUTH_KEY'));
 
 echo $client->testCredentials();
+$client->sendNotificationToUser(".","4bc5da02-1722-4fee-943d-c8b5ccd507a2");
