@@ -7,6 +7,10 @@ use GuzzleHttp\Client;
 class OneSignalClient
 {
     const API_URL = "https://onesignal.com/api/v1";
+
+    const ENDPOINT_NOTIFICATIONS = "/notifications";
+    const ENDPOINT_PLAYERS = "/players";
+
     private $client;
     private $headers;
     private $appId;
@@ -121,11 +125,23 @@ class OneSignalClient
 
         $this->headers['body'] = json_encode($parameters);
         $this->headers['verify'] = false;
-        return $this->post("notifications");
+        return $this->post(self::ENDPOINT_NOTIFICATIONS);
+    }
+
+    public function createPlayer(Array $playerData) {
+        if(!isset($playerData['device_type']) or !is_numeric($playerData['device_type'])) {
+            throw new \Exception('The `device_type` param is required as integer to create a player(device)');
+        }
+
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $playerData['app_id'] = $this->appId;
+        $playerData = json_encode($playerData);
+        return $this->client->request('POST', self::API_URL . self::ENDPOINT_PLAYERS, ['body' => $playerData]);
     }
 
     public function post($endPoint) {
-        return $this->client->post(self::API_URL."/".$endPoint, $this->headers);
+        return $this->client->post(self::API_URL . $endPoint, $this->headers);
     }
-
 }
