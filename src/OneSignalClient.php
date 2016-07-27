@@ -128,17 +128,17 @@ class OneSignalClient
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
 
-    public function createPlayer(Array $playerData) {
-        if(!isset($playerData['device_type']) or !is_numeric($playerData['device_type'])) {
+    public function createPlayer(Array $parameters) {
+        if(!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
             throw new \Exception('The `device_type` param is required as integer to create a player(device)');
         }
 
         $this->requiresAuth();
         $this->usesJSON();
 
-        $playerData['app_id'] = $this->appId;
-        $playerData = json_encode($playerData);
-        return $this->client->request('POST', self::API_URL . self::ENDPOINT_PLAYERS, ['body' => $playerData]);
+        $parameters['app_id'] = $this->appId;
+        $this->headers['body'] = json_encode($parameters);
+        return $this->post(self::ENDPOINT_PLAYERS);
     }
 
     public function post($endPoint) {
