@@ -128,20 +128,55 @@ class OneSignalClient
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
 
+    /**
+     * Creates a user/player
+     *
+     * @param array $parameters
+     * @return mixed
+     * @throws \Exception
+     */
     public function createPlayer(Array $parameters) {
         if(!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
             throw new \Exception('The `device_type` param is required as integer to create a player(device)');
         }
+        return $this->sendPlayer($parameters, 'POST', self::ENDPOINT_PLAYERS);
+    }
 
+    /**
+     * Edit a user/player
+     *
+     * @param array $parameters
+     * @return mixed
+     */
+    public function editPlayer(Array $parameters) {
+        return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
+    }
+
+    /**
+     * Create or update a by $method value
+     *
+     * @param array $parameters
+     * @param $method
+     * @param $endpoint
+     * @return mixed
+     */
+    private function sendPlayer(Array $parameters, $method, $endpoint)
+    {
         $this->requiresAuth();
         $this->usesJSON();
 
         $parameters['app_id'] = $this->appId;
         $this->headers['body'] = json_encode($parameters);
-        return $this->post(self::ENDPOINT_PLAYERS);
+
+        $method = strtolower($method);
+        return $this->{$method}($endpoint);
     }
 
     public function post($endPoint) {
         return $this->client->post(self::API_URL . $endPoint, $this->headers);
+    }
+
+    public function put($endPoint) {
+        return $this->client->put(self::API_URL . $endPoint, $this->headers);
     }
 }
