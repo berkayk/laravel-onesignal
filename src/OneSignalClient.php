@@ -17,6 +17,39 @@ class OneSignalClient
     private $restApiKey;
     private $userAuthKey;
 
+    /**
+     * @var bool
+     */
+    public $requestAsync = false;
+
+    /**
+     * @var Callable
+     */
+    private $requestCallback;
+
+    /**
+     * Turn on, turn off async requests
+     *
+     * @param bool $on
+     * @return $this
+     */
+    public function async($on = true)
+    {
+        $this->requestAsync = $on;
+        return $this;
+    }
+
+    /**
+     * Callback to execute after OneSignal returns the response
+     * @param Callable $requestCallback
+     * @return $this
+     */
+    public function callback(Callable $requestCallback)
+    {
+        $this->requestCallback = $requestCallback;
+        return $this;
+    }
+
     public function __construct($appId, $restApiKey, $userAuthKey)
     {
         $this->appId = $appId;
@@ -173,10 +206,18 @@ class OneSignalClient
     }
 
     public function post($endPoint) {
+        if($this->requestAsync === true) {
+            $promise = $this->client->postAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
         return $this->client->post(self::API_URL . $endPoint, $this->headers);
     }
 
     public function put($endPoint) {
+        if($this->requestAsync === true) {
+            $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
         return $this->client->put(self::API_URL . $endPoint, $this->headers);
     }
 }
