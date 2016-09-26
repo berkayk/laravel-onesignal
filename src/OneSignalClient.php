@@ -35,7 +35,7 @@ class OneSignalClient
         $this->headers['headers']['Content-Type'] = 'application/json';
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null) {
+    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -54,10 +54,14 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null) {
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -76,10 +80,14 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null) {
+    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -96,6 +104,10 @@ class OneSignalClient
 
         if (isset($data)) {
             $params['data'] = $data;
+        }
+
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
         }
 
         $this->sendNotificationCustom($params);
@@ -120,6 +132,7 @@ class OneSignalClient
         }
 
         $this->headers['body'] = json_encode($parameters);
+        $this->headers['buttons'] = json_encode($parameters);
         $this->headers['verify'] = false;
         return $this->post("notifications");
     }
