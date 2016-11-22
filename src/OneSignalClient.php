@@ -12,6 +12,7 @@ class OneSignalClient
     private $appId;
     private $restApiKey;
     private $userAuthKey;
+    private $additionalParams;
 
     public function __construct($appId, $restApiKey, $userAuthKey)
     {
@@ -21,6 +22,7 @@ class OneSignalClient
 
         $this->client = new Client();
         $this->headers = ['headers' => []];
+        $this->additionalParams = [];
     }
 
     public function testCredentials() {
@@ -33,6 +35,20 @@ class OneSignalClient
 
     private function usesJSON() {
         $this->headers['headers']['Content-Type'] = 'application/json';
+    }
+
+    public function addParams($params = [])
+    {
+        $this->additionalParams = $params;
+
+        return $this;
+    }
+
+    public function setParam($key, $value)
+    {
+        $this->additionalParams[$key] = $value;
+
+        return $this;
     }
 
     public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null) {
@@ -130,6 +146,8 @@ class OneSignalClient
         if (empty($parameters['included_segments']) && empty($parameters['include_player_ids'])) {
             $parameters['included_segments'] = ['all'];
         }
+
+        $parameters = array_merge($parameters, $this->additionalParams);
 
         $this->headers['body'] = json_encode($parameters);
         $this->headers['buttons'] = json_encode($parameters);
