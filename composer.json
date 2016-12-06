@@ -1,5 +1,5 @@
 {
-  "name": "berkayk/onesignal-laravel",
+  "name": "maykonn/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
@@ -23,6 +23,10 @@
       "name": "Berkay Kaya",
       "email": "berkayk@gmail.com",
       "homepage": "http://berkaykaya.com"
+    },
+    {
+      "name": "Maykonn Welington Candido",
+      "email": "maykonn@outlook.com"
     }
   ],
   "minimum-stability": "dev",
