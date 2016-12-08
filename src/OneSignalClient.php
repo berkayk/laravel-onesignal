@@ -16,6 +16,7 @@ class OneSignalClient
     private $appId;
     private $restApiKey;
     private $userAuthKey;
+    private $additionalParams;
 
     /**
      * @var bool
@@ -58,6 +59,7 @@ class OneSignalClient
 
         $this->client = new Client();
         $this->headers = ['headers' => []];
+        $this->additionalParams = [];
     }
 
     public function testCredentials() {
@@ -72,7 +74,21 @@ class OneSignalClient
         $this->headers['headers']['Content-Type'] = 'application/json';
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null) {
+    public function addParams($params = [])
+    {
+        $this->additionalParams = $params;
+
+        return $this;
+    }
+
+    public function setParam($key, $value)
+    {
+        $this->additionalParams[$key] = $value;
+
+        return $this;
+    }
+
+    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -91,10 +107,14 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null) {
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -113,10 +133,14 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null) {
+    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
         );
@@ -133,6 +157,10 @@ class OneSignalClient
 
         if (isset($data)) {
             $params['data'] = $data;
+        }
+
+        if (isset($button)) {
+            $params['buttons'] = $buttons;
         }
 
         $this->sendNotificationCustom($params);
@@ -156,7 +184,10 @@ class OneSignalClient
             $parameters['included_segments'] = ['all'];
         }
 
+        $parameters = array_merge($parameters, $this->additionalParams);
+
         $this->headers['body'] = json_encode($parameters);
+        $this->headers['buttons'] = json_encode($parameters);
         $this->headers['verify'] = false;
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
