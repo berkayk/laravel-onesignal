@@ -114,14 +114,18 @@ class OneSignalClient
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null) {
+    public function sendNotificationToAll($message, $headings, $url = null, $data = null, $buttons = null) {
         $contents = array(
             "en" => $message
+        );
+        $headings = array(
+            "en" => $headings
         );
 
         $params = array(
             'app_id' => $this->appId,
             'contents' => $contents,
+            'headings' => $headings,
             'included_segments' => array('All')
         );
 
