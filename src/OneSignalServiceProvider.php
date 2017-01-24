@@ -14,13 +14,12 @@ class OneSignalServiceProvider extends ServiceProvider
     public function boot()
     {
         $configPath = __DIR__ . '/../config/onesignal.php';
-        $app = $this->app;
-        
-        if (class_exists('Illuminate\Foundation\Application') && $app instanceof LaravelApplication && $app->runningInConsole()) {
-            $this->publishes([$configPath => config_path('onesignal.php')]);
-            $this->mergeConfigFrom($configPath, 'onesignal');
-        } else if ( class_exists('Laravel\Lumen\Application', false) ) {
-            $app->configure('onesignal');
+
+        $this->publishes([$configPath => config_path('onesignal.php')]);
+        $this->mergeConfigFrom($configPath, 'onesignal');
+
+        if ( class_exists('Laravel\Lumen\Application') ) {
+            $this->app->configure('onesignal');
         }
     }
 

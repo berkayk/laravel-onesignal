@@ -92,5 +92,11 @@ You can send a custom message with
 
     OneSignal::sendNotificationCustom($parameters);
     
+    ### Sending a Custom Notification
+### Sending a async Custom Notification
+You can send a async custom message with 
+
+    OneSignal::async()->sendNotificationCustom($parameters);
+    
 Please refer to https://documentation.onesignal.com/docs/notifications-create-notification for all customizable parameters.
 

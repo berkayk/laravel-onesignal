@@ -23,8 +23,12 @@
       "name": "Berkay Kaya",
       "email": "berkayk@gmail.com",
       "homepage": "http://berkaykaya.com"
+    },
+    {
+      "name": "Maykonn Welington Candido",
+      "email": "maykonn@outlook.com"
     }
   ],
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true 
 }
