@@ -7,11 +7,49 @@ use GuzzleHttp\Client;
 class OneSignalClient
 {
     const API_URL = "https://onesignal.com/api/v1";
+
+    const ENDPOINT_NOTIFICATIONS = "/notifications";
+    const ENDPOINT_PLAYERS = "/players";
+
     private $client;
     private $headers;
     private $appId;
     private $restApiKey;
     private $userAuthKey;
+    private $additionalParams;
+
+    /**
+     * @var bool
+     */
+    public $requestAsync = false;
+
+    /**
+     * @var Callable
+     */
+    private $requestCallback;
+
+    /**
+     * Turn on, turn off async requests
+     *
+     * @param bool $on
+     * @return $this
+     */
+    public function async($on = true)
+    {
+        $this->requestAsync = $on;
+        return $this;
+    }
+
+    /**
+     * Callback to execute after OneSignal returns the response
+     * @param Callable $requestCallback
+     * @return $this
+     */
+    public function callback(Callable $requestCallback)
+    {
+        $this->requestCallback = $requestCallback;
+        return $this;
+    }
 
     public function __construct($appId, $restApiKey, $userAuthKey)
     {
@@ -21,6 +59,7 @@ class OneSignalClient
 
         $this->client = new Client();
         $this->headers = ['headers' => []];
+        $this->additionalParams = [];
     }
 
     public function testCredentials() {
@@ -33,6 +72,20 @@ class OneSignalClient
 
     private function usesJSON() {
         $this->headers['headers']['Content-Type'] = 'application/json';
+    }
+
+    public function addParams($params = [])
+    {
+        $this->additionalParams = $params;
+
+        return $this;
+    }
+
+    public function setParam($key, $value)
+    {
+        $this->additionalParams[$key] = $value;
+
+        return $this;
     }
 
     public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null) {
@@ -131,14 +184,71 @@ class OneSignalClient
             $parameters['included_segments'] = ['all'];
         }
 
+        $parameters = array_merge($parameters, $this->additionalParams);
+
         $this->headers['body'] = json_encode($parameters);
         $this->headers['buttons'] = json_encode($parameters);
         $this->headers['verify'] = false;
-        return $this->post("notifications");
+        return $this->post(self::ENDPOINT_NOTIFICATIONS);
+    }
+
+    /**
+     * Creates a user/player
+     *
+     * @param array $parameters
+     * @return mixed
+     * @throws \Exception
+     */
+    public function createPlayer(Array $parameters) {
+        if(!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
+            throw new \Exception('The `device_type` param is required as integer to create a player(device)');
+        }
+        return $this->sendPlayer($parameters, 'POST', self::ENDPOINT_PLAYERS);
+    }
+
+    /**
+     * Edit a user/player
+     *
+     * @param array $parameters
+     * @return mixed
+     */
+    public function editPlayer(Array $parameters) {
+        return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
+    }
+
+    /**
+     * Create or update a by $method value
+     *
+     * @param array $parameters
+     * @param $method
+     * @param $endpoint
+     * @return mixed
+     */
+    private function sendPlayer(Array $parameters, $method, $endpoint)
+    {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $parameters['app_id'] = $this->appId;
+        $this->headers['body'] = json_encode($parameters);
+
+        $method = strtolower($method);
+        return $this->{$method}($endpoint);
     }
 
     public function post($endPoint) {
-        return $this->client->post(self::API_URL."/".$endPoint, $this->headers);
+        if($this->requestAsync === true) {
+            $promise = $this->client->postAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
+        return $this->client->post(self::API_URL . $endPoint, $this->headers);
     }
 
+    public function put($endPoint) {
+        if($this->requestAsync === true) {
+            $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
+        return $this->client->put(self::API_URL . $endPoint, $this->headers);
+    }
 }
