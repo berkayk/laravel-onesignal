@@ -55,8 +55,9 @@ You can easily send a message to all registered users with the command
     OneSignal::sendNotificationToAll("Some Message", $url);
     OneSignal::sendNotificationToAll("Some Message", $url, $data);
     OneSignal::sendNotificationToAll("Some Message", $url, $data, $buttons);
+    OneSignal::sendNotificationToAll("Some Message", $url, $data, $buttons,$schedule);
     
-`$url` , `$data` and `$buttons` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
     
 
 ### Sending a Notification To A Specific User
@@ -67,9 +68,10 @@ After storing a user's tokens in a table, you can simply send a message with
     OneSignal::sendNotificationToUser("Some Message", $userId, $url);
     OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data);
     OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons);
+    OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons,$schedule);
     
 `$userId` is the user's unique id where he/she is registered for notifications. Read https://documentation.onesignal.com/docs/website-sdk-api#getUserId for additional details.
-`$url` , `$data` and `$buttons` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
 
 
 ### Sending a Notification To Segment
@@ -80,8 +82,9 @@ You can simply send a notification to a specific segment with
     OneSignal::sendNotificationToSegment("Some Message", $segment, $url);
     OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data);
     OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data, $buttons);
+    OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data, $buttons,$schedule);
     
-`$url` , `$data` and `$buttons` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
 
 ### Sending a Custom Notification
 
