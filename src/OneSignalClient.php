@@ -88,7 +88,7 @@ class OneSignalClient
         return $this;
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null) {
+    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null) {
         $contents = array(
             "en" => $message
         );
@@ -111,10 +111,14 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
+        if(isset($schedule)){
+            $params['send_after'] = $schedule;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null) {
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null) {
         $contents = array(
             "en" => $message
         );
@@ -137,10 +141,14 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
+        if(isset($schedule)){
+            $params['send_after'] = $schedule;
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null) {
+    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null) {
         $contents = array(
             "en" => $message
         );
@@ -163,6 +171,10 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
+        if(isset($schedule)){
+            $params['send_after'] = $schedule;
+        }
+        
         $this->sendNotificationCustom($params);
     }
 
