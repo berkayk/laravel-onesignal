@@ -180,7 +180,7 @@ class OneSignalClient
 
     /**
      * Send a notification with custom parameters defined in
-     * https://documentation.onesignal.com/v2.0/docs/notifications-create-notification
+     * https://documentation.onesignal.com/reference#section-example-code-create-notification
      * @param array $parameters
      * @return mixed
      */
