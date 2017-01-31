@@ -78,7 +78,7 @@ After storing a user's tokens in a table, you can simply send a message with
     OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons);
     OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons,$schedule);
     
-`$userId` is the user's unique id where he/she is registered for notifications. Read https://documentation.onesignal.com/docs/website-sdk-api#getUserId for additional details.
+`$userId` is the user's unique id where he/she is registered for notifications. Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
 
 
@@ -106,5 +106,5 @@ You can send a async custom message with
 
     OneSignal::async()->sendNotificationCustom($parameters);
     
-Please refer to https://documentation.onesignal.com/docs/notifications-create-notification for all customizable parameters.
+Please refer to https://documentation.onesignal.com/reference for all customizable parameters.
 
