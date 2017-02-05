@@ -188,8 +188,10 @@ class OneSignalClient
         $this->requiresAuth();
         $this->usesJSON();
 
-        // Make sure to use app_id
-        $parameters['app_id'] = $this->appId;
+        // if there is no `app_id` in params so use the default one
+        if (! isset($parameters['app_id']) ) {
+            $parameters['app_id'] = $this->appId;
+        }
 
         // Make sure to use included_segments
         if (empty($parameters['included_segments']) && empty($parameters['include_player_ids'])) {
