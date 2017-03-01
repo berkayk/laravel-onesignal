@@ -107,7 +107,7 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
-        if (isset($button)) {
+        if (isset($buttons)) {
             $params['buttons'] = $buttons;
         }
 
@@ -137,7 +137,7 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
-        if (isset($button)) {
+        if (isset($buttons)) {
             $params['buttons'] = $buttons;
         }
 
@@ -167,7 +167,7 @@ class OneSignalClient
             $params['data'] = $data;
         }
 
-        if (isset($button)) {
+        if (isset($buttons)) {
             $params['buttons'] = $buttons;
         }
 
