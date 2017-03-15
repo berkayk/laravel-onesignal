@@ -59,11 +59,7 @@ You need to fill in `onesignal.php` file that is found in your applications `con
 
 You can easily send a message to all registered users with the command
 
-    OneSignal::sendNotificationToAll("Some Message");
-    OneSignal::sendNotificationToAll("Some Message", $url);
-    OneSignal::sendNotificationToAll("Some Message", $url, $data);
-    OneSignal::sendNotificationToAll("Some Message", $url, $data, $buttons);
-    OneSignal::sendNotificationToAll("Some Message", $url, $data, $buttons,$schedule);
+    OneSignal::sendNotificationToAll("Some Message", $url = null, $data = null, $buttons = null, $schedule = null);
     
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
     
@@ -72,11 +68,7 @@ You can easily send a message to all registered users with the command
 
 After storing a user's tokens in a table, you can simply send a message with
 
-    OneSignal::sendNotificationToUser("Some Message", $userId);
-    OneSignal::sendNotificationToUser("Some Message", $userId, $url);
-    OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data);
-    OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons);
-    OneSignal::sendNotificationToUser("Some Message", $userId, $url, $data, $buttons,$schedule);
+    OneSignal::sendNotificationToUser("Some Message", $userId, $url = null, $data = null, $buttons = null, $schedule = null);
     
 `$userId` is the user's unique id where he/she is registered for notifications. Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
@@ -86,11 +78,7 @@ After storing a user's tokens in a table, you can simply send a message with
 
 You can simply send a notification to a specific segment with
 
-    OneSignal::sendNotificationToSegment("Some Message", $segment);
-    OneSignal::sendNotificationToSegment("Some Message", $segment, $url);
-    OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data);
-    OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data, $buttons);
-    OneSignal::sendNotificationToSegment("Some Message", $segment, $url, $data, $buttons,$schedule);
+    OneSignal::sendNotificationToSegment("Some Message", $segment, $url = null, $data = null, $buttons = null, $schedule = null);
     
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
 
