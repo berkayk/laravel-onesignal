@@ -98,7 +98,10 @@ class OneSignalClient
             'contents' => $contents,
             'include_player_ids' => array($userId)
         );
-
+        
+        $params['ios_badgeType'] = "Increase";
+        $params['ios_badgeCount'] = 1;
+        
         if (isset($url)) {
             $params['url'] = $url;
         }
@@ -128,7 +131,10 @@ class OneSignalClient
             'contents' => $contents,
             'included_segments' => array('All')
         );
-
+        
+        $params['ios_badgeType'] = "Increase";
+        $params['ios_badgeCount'] = 1;
+        
         if (isset($url)) {
             $params['url'] = $url;
         }
@@ -158,7 +164,10 @@ class OneSignalClient
             'contents' => $contents,
             'included_segments' => [$segment]
         );
-
+        
+        $params['ios_badgeType'] = "Increase";
+        $params['ios_badgeCount'] = 1;
+        
         if (isset($url)) {
             $params['url'] = $url;
         }
