@@ -1,5 +1,5 @@
 {
-  "name": "berkayk/onesignal-laravel",
+  "name": "almatri/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Berkayk\\OneSignal\\": "src/"
+      "Almatri\\OneSignal\\": "src/"
     }
   },
   "license": "MIT",
