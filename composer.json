@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Almatri\\OneSignal\\": "src/"
+      "Berkayk\\OneSignal\\": "src/"
     }
   },
   "license": "MIT",
