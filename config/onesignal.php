@@ -1,6 +1,5 @@
 <?php
-
-
+//Add as many apps as you want
 $apps = array(
         'appName' => array(
             'app_id' => 'YOUR-APP-ID-HERE',
@@ -8,5 +7,4 @@ $apps = array(
             'user_auth_key' => 'YOUR-USER-AUTH-KEY',
         )
     );
-
 return $apps;
