@@ -14,7 +14,13 @@ class OneSignalClientsManager{
     $this->clients = $clients;
   }
   
+  //Get all the clients
   public function getClients(){
       return $this->clients;
+  }
+  
+  //Get one client 
+  public function getClient($clientName){
+      return $this->clients[$clientName];
   }
 }
