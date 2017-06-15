@@ -64,6 +64,13 @@ You can easily send a message to all registered users with the command
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide a `$url` parameter, users will be redirecting to that url.
     
 
+### Sending a Notification based on Tags/Filters
+
+You can send a message based on a set of tags with the command
+
+    OneSignal::sendNotificationUsingTags("Some Message", array("key" => "device_uuid", "relation" => "=", "value" => 123e4567-e89b-12d3-a456-426655440000), $url = null, $data = null, $buttons = null, $schedule = null);
+
+
 ### Sending a Notification To A Specific User
 
 After storing a user's tokens in a table, you can simply send a message with
