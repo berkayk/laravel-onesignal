@@ -218,9 +218,14 @@ class OneSignalClient
     public function sendNotificationCustom($parameters = []){
         $this->requiresAuth();
         $this->usesJSON();
-
+        // By Sucipto
+        if ($parameters['api_key']) {
+            $this->headers['headers']['Authorization'] = 'Basic '.$parameters['api_key'];
+        }
         // Make sure to use app_id
-        $parameters['app_id'] = $this->appId;
+        if (!$parameters['app_id']) {
+            $parameters['app_id'] = $this->appId;
+        }
 
         // Make sure to use included_segments
         if (empty($parameters['included_segments']) && empty($parameters['include_player_ids'])) {
