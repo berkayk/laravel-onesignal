@@ -127,7 +127,6 @@ class OneSignalClient
             'app_id' => $this->appId,
             'contents' => $contents,
             'tags' => $tags,
-            'include_player_ids' => array('All')
         );
 
         if (isset($url)) {
