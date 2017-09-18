@@ -218,7 +218,7 @@ class OneSignalClient
         $this->requiresAuth();
         $this->usesJSON();
         // By Sucipto
-        if ($parameters['api_key']) {
+        if (isset($parameters['api_key'])) {
             $this->headers['headers']['Authorization'] = 'Basic '.$parameters['api_key'];
         }
         // Make sure to use app_id
