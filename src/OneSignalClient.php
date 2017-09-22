@@ -11,12 +11,12 @@ class OneSignalClient
     const ENDPOINT_NOTIFICATIONS = "/notifications";
     const ENDPOINT_PLAYERS = "/players";
 
-    private $client;
-    private $headers;
-    private $appId;
-    private $restApiKey;
-    private $userAuthKey;
-    private $additionalParams;
+    protected $client;
+    protected $headers;
+    protected $appId;
+    protected $restApiKey;
+    protected $userAuthKey;
+    protected $additionalParams;
 
     /**
      * @var bool
@@ -217,12 +217,13 @@ class OneSignalClient
     public function sendNotificationCustom($parameters = []){
         $this->requiresAuth();
         $this->usesJSON();
-        // By Sucipto
+
         if (isset($parameters['api_key'])) {
             $this->headers['headers']['Authorization'] = 'Basic '.$parameters['api_key'];
         }
+
         // Make sure to use app_id
-        if (!$parameters['app_id']) {
+        if (!isset($parameters['app_id'])) {
             $parameters['app_id'] = $this->appId;
         }
 
