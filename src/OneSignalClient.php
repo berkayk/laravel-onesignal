@@ -116,7 +116,9 @@ class OneSignalClient
         }
 
         if (isset($heading)) {
-            $params['heading'] = $heading;
+            $params['heading'] = array(
+                'en' => $heading
+            );
         }
 
         $this->sendNotificationCustom($params);
@@ -150,7 +152,9 @@ class OneSignalClient
         }
 
         if (isset($heading)) {
-            $params['heading'] = $heading;
+            $params['heading'] = array(
+                'en' => $heading
+            );
         }
 
         $this->sendNotificationCustom($params);
@@ -184,7 +188,9 @@ class OneSignalClient
         }
 
         if (isset($heading)) {
-            $params['heading'] = $heading;
+            $params['heading'] = array(
+                'en' => $heading
+            );
         }
 
         $this->sendNotificationCustom($params);
@@ -218,7 +224,9 @@ class OneSignalClient
         }
 
         if (isset($heading)) {
-            $params['heading'] = $heading;
+            $params['heading'] = array(
+                'en' => $heading
+            );
         }
 
         $this->sendNotificationCustom($params);
