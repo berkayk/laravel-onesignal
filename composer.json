@@ -1,5 +1,5 @@
 {
-  "name": "berkayk/onesignal-laravel",
+  "name": "carloscgo/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
@@ -14,11 +14,15 @@
   },
   "autoload": {
     "psr-4": {
-      "Berkayk\\OneSignal\\": "src/"
+      "CarlosCGO\\OneSignal\\": "src/"
     }
   },
   "license": "MIT",
   "authors": [
+    {
+      "name": "Carlos Camacho",
+      "email": "carloscgo123@gmail.com"
+    },
     {
       "name": "Berkay Kaya",
       "email": "berkayk@gmail.com",
