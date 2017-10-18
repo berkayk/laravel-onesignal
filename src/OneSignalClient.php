@@ -253,7 +253,7 @@ class OneSignalClient
         } else {
             $filters = ["field" => "email", "value" => $email];
         }
-        $filters = [$filters];
+
         $this->sendNotificationToFiltersToSegment($message, $filters, $segment, $url, $data, $buttons, $schedule);
     }
 
@@ -273,7 +273,7 @@ class OneSignalClient
         $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
-            'filters' => $filters,
+            'filters' => [$filters],
             'included_segments' => [$segment]
         ];
 
