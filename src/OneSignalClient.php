@@ -10,6 +10,7 @@ class OneSignalClient
 
     const ENDPOINT_NOTIFICATIONS = "/notifications";
     const ENDPOINT_PLAYERS = "/players";
+    const ENDPOINT_APPS = "/apps";
 
     protected $client;
     protected $headers;
@@ -247,8 +248,9 @@ class OneSignalClient
      * @return mixed
      * @throws \Exception
      */
-    public function createPlayer(Array $parameters) {
-        if(!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
+    public function createPlayer(Array $parameters)
+    {
+        if (!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
             throw new \Exception('The `device_type` param is required as integer to create a player(device)');
         }
         return $this->sendPlayer($parameters, 'POST', self::ENDPOINT_PLAYERS);
@@ -262,6 +264,41 @@ class OneSignalClient
      */
     public function editPlayer(Array $parameters) {
         return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayers()
+    {
+        return $this->sendPlayer([], 'GET', self::ENDPOINT_PLAYERS);
+    }
+
+    /**
+     * @param $playerId
+     * @return mixed
+     */
+    public function getPlayer($playerId)
+    {
+        return $this->sendPlayer([], 'GET', self::ENDPOINT_PLAYERS . '/' . $playerId);
+    }
+
+    /**
+     * @param array $parameters
+     * @return mixed
+     */
+    public function addApplication(Array $parameters)
+    {
+        return $this->send($parameters, 'POST', self::ENDPOINT_APPS);
+    }
+
+    /**
+     * @param $appId
+     * @return mixed
+     */
+    public function getApplication($appId)
+    {
+        return $this->send([], 'GET', self::ENDPOINT_APPS . '/' . $appId);
     }
 
     /**
@@ -284,19 +321,42 @@ class OneSignalClient
         return $this->{$method}($endpoint);
     }
 
-    public function post($endPoint) {
-        if($this->requestAsync === true) {
+    /**
+     * Alias method for sendPlayer
+     * @param array $parameters
+     * @param $method
+     * @param $endpoint
+     * @return mixed
+     */
+    private function send(Array $parameters, $method, $endpoint)
+    {
+        return $this->sendPlayer($parameters, $method, $endpoint);
+    }
+
+    public function post($endPoint)
+    {
+        if ($this->requestAsync === true) {
             $promise = $this->client->postAsync(self::API_URL . $endPoint, $this->headers);
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
         return $this->client->post(self::API_URL . $endPoint, $this->headers);
     }
 
-    public function put($endPoint) {
-        if($this->requestAsync === true) {
+    public function put($endPoint)
+    {
+        if ($this->requestAsync === true) {
             $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
         return $this->client->put(self::API_URL . $endPoint, $this->headers);
+    }
+
+    public function get($endPoint)
+    {
+        if ($this->requestAsync === true) {
+            $promise = $this->client->getAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
+        return $this->client->get(self::API_URL . $endPoint, $this->headers);
     }
 }
