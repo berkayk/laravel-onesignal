@@ -11,12 +11,12 @@ class OneSignalClient
     const ENDPOINT_NOTIFICATIONS = "/notifications";
     const ENDPOINT_PLAYERS = "/players";
 
-    protected $client;
-    protected $headers;
-    protected $appId;
-    protected $restApiKey;
-    protected $userAuthKey;
-    protected $additionalParams;
+    private $client;
+    private $headers;
+    private $appId;
+    private $restApiKey;
+    private $userAuthKey;
+    private $additionalParams;
 
     /**
      * @var bool
@@ -32,22 +32,27 @@ class OneSignalClient
      * Turn on, turn off async requests
      *
      * @param bool $on
+     *
      * @return $this
      */
     public function async($on = true)
     {
         $this->requestAsync = $on;
+
         return $this;
     }
 
     /**
      * Callback to execute after OneSignal returns the response
+     *
      * @param Callable $requestCallback
+     *
      * @return $this
      */
     public function callback(Callable $requestCallback)
     {
         $this->requestCallback = $requestCallback;
+
         return $this;
     }
 
@@ -62,15 +67,18 @@ class OneSignalClient
         $this->additionalParams = [];
     }
 
-    public function testCredentials() {
-        return "APP ID: ".$this->appId." REST: ".$this->restApiKey;
+    public function testCredentials()
+    {
+        return "APP ID: " . $this->appId . " REST: " . $this->restApiKey;
     }
 
-    private function requiresAuth() {
-        $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
+    private function requiresAuth()
+    {
+        $this->headers['headers']['Authorization'] = 'Basic ' . $this->restApiKey;
     }
 
-    private function usesJSON() {
+    private function usesJSON()
+    {
         $this->headers['headers']['Content-Type'] = 'application/json';
     }
 
@@ -88,16 +96,23 @@ class OneSignalClient
         return $this;
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null) {
-        $contents = array(
+    public function sendNotificationToUser(
+        $message,
+        $userId,
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    ) {
+        $contents = [
             "en" => $message
-        );
+        ];
 
-        $params = array(
+        $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
-            'include_player_ids' => array($userId)
-        );
+            'include_player_ids' => [$userId]
+        ];
 
         if (isset($url)) {
             $params['url'] = $url;
@@ -111,23 +126,30 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
-        if(isset($schedule)){
+        if (isset($schedule)) {
             $params['send_after'] = $schedule;
         }
 
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null) {
-        $contents = array(
+    public function sendNotificationUsingTags(
+        $message,
+        $tags,
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    ) {
+        $contents = [
             "en" => $message
-        );
+        ];
 
-        $params = array(
+        $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
             'tags' => $tags,
-        );
+        ];
 
         if (isset($url)) {
             $params['url'] = $url;
@@ -141,23 +163,24 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
-        if(isset($schedule)){
+        if (isset($schedule)) {
             $params['send_after'] = $schedule;
         }
 
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null) {
-        $contents = array(
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null)
+    {
+        $contents = [
             "en" => $message
-        );
+        ];
 
-        $params = array(
+        $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
-            'included_segments' => array('All')
-        );
+            'included_segments' => ['All']
+        ];
 
         if (isset($url)) {
             $params['url'] = $url;
@@ -171,23 +194,30 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
-        if(isset($schedule)){
+        if (isset($schedule)) {
             $params['send_after'] = $schedule;
         }
 
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null) {
-        $contents = array(
+    public function sendNotificationToSegment(
+        $message,
+        $segment,
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    ) {
+        $contents = [
             "en" => $message
-        );
+        ];
 
-        $params = array(
+        $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
             'included_segments' => [$segment]
-        );
+        ];
 
         if (isset($url)) {
             $params['url'] = $url;
@@ -201,7 +231,65 @@ class OneSignalClient
             $params['buttons'] = $buttons;
         }
 
-        if(isset($schedule)){
+        if (isset($schedule)) {
+            $params['send_after'] = $schedule;
+        }
+
+        $this->sendNotificationCustom($params);
+    }
+
+    public function sendNotificationToUserByEmail(
+        $message,
+        $email,
+        $filters = [],
+        $segment = ['All'],
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    ) {
+        if (count($filters)) {
+            $filters = array_merge($filters, ["field" => "email", "value" => $email]);
+        } else {
+            $filters = [["field" => "email", "value" => $email]];
+        }
+
+        $this->sendNotificationToFiltersToSegment($message, $filters, $segment, $url, $data, $buttons, $schedule);
+    }
+
+    public function sendNotificationToFiltersToSegment(
+        $message,
+        $filters,
+        $segment = ['All'],
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    ) {
+        $contents = [
+            "en" => $message
+        ];
+
+        $params = [
+            'app_id' => $this->appId,
+            'contents' => $contents,
+            'filters' => $filters,
+            'included_segments' => [$segment]
+        ];
+
+        if (isset($url)) {
+            $params['url'] = $url;
+        }
+
+        if (isset($data)) {
+            $params['data'] = $data;
+        }
+
+        if (isset($buttons)) {
+            $params['buttons'] = $buttons;
+        }
+
+        if (isset($schedule)) {
             $params['send_after'] = $schedule;
         }
 
@@ -211,19 +299,21 @@ class OneSignalClient
     /**
      * Send a notification with custom parameters defined in
      * https://documentation.onesignal.com/reference#section-example-code-create-notification
+     *
      * @param array $parameters
+     *
      * @return mixed
      */
-    public function sendNotificationCustom($parameters = []){
+    public function sendNotificationCustom($parameters = [])
+    {
         $this->requiresAuth();
         $this->usesJSON();
-
+        // By Sucipto
         if (isset($parameters['api_key'])) {
-            $this->headers['headers']['Authorization'] = 'Basic '.$parameters['api_key'];
+            $this->headers['headers']['Authorization'] = 'Basic ' . $parameters['api_key'];
         }
-
         // Make sure to use app_id
-        if (!isset($parameters['app_id'])) {
+        if ( ! $parameters['app_id']) {
             $parameters['app_id'] = $this->appId;
         }
 
@@ -237,6 +327,7 @@ class OneSignalClient
         $this->headers['body'] = json_encode($parameters);
         $this->headers['buttons'] = json_encode($parameters);
         $this->headers['verify'] = false;
+
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
 
@@ -244,13 +335,16 @@ class OneSignalClient
      * Creates a user/player
      *
      * @param array $parameters
+     *
      * @return mixed
      * @throws \Exception
      */
-    public function createPlayer(Array $parameters) {
-        if(!isset($parameters['device_type']) or !is_numeric($parameters['device_type'])) {
+    public function createPlayer(Array $parameters)
+    {
+        if ( ! isset($parameters['device_type']) or ! is_numeric($parameters['device_type'])) {
             throw new \Exception('The `device_type` param is required as integer to create a player(device)');
         }
+
         return $this->sendPlayer($parameters, 'POST', self::ENDPOINT_PLAYERS);
     }
 
@@ -258,9 +352,11 @@ class OneSignalClient
      * Edit a user/player
      *
      * @param array $parameters
+     *
      * @return mixed
      */
-    public function editPlayer(Array $parameters) {
+    public function editPlayer(Array $parameters)
+    {
         return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
     }
 
@@ -268,8 +364,9 @@ class OneSignalClient
      * Create or update a by $method value
      *
      * @param array $parameters
-     * @param $method
-     * @param $endpoint
+     * @param       $method
+     * @param       $endpoint
+     *
      * @return mixed
      */
     private function sendPlayer(Array $parameters, $method, $endpoint)
@@ -281,22 +378,29 @@ class OneSignalClient
         $this->headers['body'] = json_encode($parameters);
 
         $method = strtolower($method);
+
         return $this->{$method}($endpoint);
     }
 
-    public function post($endPoint) {
-        if($this->requestAsync === true) {
+    public function post($endPoint)
+    {
+        if ($this->requestAsync === true) {
             $promise = $this->client->postAsync(self::API_URL . $endPoint, $this->headers);
+
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
+
         return $this->client->post(self::API_URL . $endPoint, $this->headers);
     }
 
-    public function put($endPoint) {
-        if($this->requestAsync === true) {
+    public function put($endPoint)
+    {
+        if ($this->requestAsync === true) {
             $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
+
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
+
         return $this->client->put(self::API_URL . $endPoint, $this->headers);
     }
 }
