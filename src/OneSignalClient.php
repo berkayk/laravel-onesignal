@@ -251,7 +251,7 @@ class OneSignalClient
         if (count($filters)) {
             $filters = array_merge($filters, ["field" => "email", "value" => $email]);
         } else {
-            $filters = [["field" => "email", "value" => $email]];
+            $filters = ["field" => "email", "value" => $email];
         }
 
         $this->sendNotificationToFiltersToSegment($message, $filters, $segment, $url, $data, $buttons, $schedule);
