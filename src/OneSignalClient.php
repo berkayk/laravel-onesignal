@@ -273,7 +273,7 @@ class OneSignalClient
         $params = [
             'app_id' => $this->appId,
             'contents' => $contents,
-            'filters' => [$filters],
+            'filters' => $filters,
             'included_segments' => [$segment]
         ];
 
