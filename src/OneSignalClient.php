@@ -240,6 +240,16 @@ class OneSignalClient
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
 
+    public function getNotification($notification_id, $app_id = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        if(!$app_id)
+            $app_id = $this->appId;
+
+        return $this->get(self::ENDPOINT_NOTIFICATIONS . '/'.$notification_id . '?app_id='.$app_id);
+    }
+
     /**
      * Creates a user/player
      *
@@ -297,6 +307,10 @@ class OneSignalClient
             $promise = $this->client->putAsync(self::API_URL . $endPoint, $this->headers);
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
+        return $this->client->put(self::API_URL . $endPoint, $this->headers);
+    }
+
+    public function get($endPoint) {
         return $this->client->put(self::API_URL . $endPoint, $this->headers);
     }
 }
