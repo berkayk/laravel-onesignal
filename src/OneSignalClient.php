@@ -311,6 +311,6 @@ class OneSignalClient
     }
 
     public function get($endPoint) {
-        return $this->client->put(self::API_URL . $endPoint, $this->headers);
+        return $this->client->get(self::API_URL . $endPoint, $this->headers);
     }
 }
