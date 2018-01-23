@@ -96,7 +96,7 @@ class OneSignalClient
         $params = array(
             'app_id' => $this->appId,
             'contents' => $contents,
-            'include_player_ids' => array($userId)
+            'include_player_ids' => is_array($userId) ? $userId : array($userId)
         );
 
         if (isset($url)) {
