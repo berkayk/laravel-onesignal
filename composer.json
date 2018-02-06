@@ -1,5 +1,5 @@
 {
-  "name": "berkayk/onesignal-laravel",
+  "name": "umuttaymaz/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
@@ -14,11 +14,16 @@
   },
   "autoload": {
     "psr-4": {
-      "Berkayk\\OneSignal\\": "src/"
+      "UmutTaymaz\\OneSignal\\": "src/"
     }
   },
   "license": "MIT",
   "authors": [
+    {
+      "name": "Umut Taymaz",
+      "email": "umut@kreator.com.tr",
+      "homepage": "https://umuttaymaz.com.tr"
+    },
     {
       "name": "Berkay Kaya",
       "email": "berkayk@gmail.com",
