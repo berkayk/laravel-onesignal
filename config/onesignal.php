@@ -18,6 +18,5 @@ return array(
     |
 	|
 	*/
-    'rest_api_key' => 'YOUR-REST-API-KEY-HERE',
-    'user_auth_key' => 'YOUR-USER-AUTH-KEY'
+    'rest_api_key' => 'YOUR-REST-API-KEY-HERE'
 );
