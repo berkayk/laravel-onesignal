@@ -68,8 +68,10 @@ You can easily send a message to all registered users with the command
 
 You can send a message based on a set of tags with the command
 
+#####Example 1:
     OneSignal::sendNotificationUsingTags("Some Message", array(["field" => "email", "relation" => "=", "value" => "m.alavi1989@gmail.com"]), $url = null, $data = null, $buttons = null, $schedule = null);
-
+#####Example 2:
+    OneSignal::sendNotificationUsingTags("Some Message", array(["field" => "session_count", "relation" => ">", "value" => '2']), $url = null, $data = null, $buttons = null, $schedule = null);
 
 ### Sending a Notification To A Specific User
 
