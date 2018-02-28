@@ -126,7 +126,7 @@ class OneSignalClient
         $params = array(
             'app_id' => $this->appId,
             'contents' => $contents,
-            'tags' => $tags,
+            'filters' => $tags,
         );
 
         if (isset($url)) {
