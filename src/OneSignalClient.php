@@ -88,7 +88,7 @@ class OneSignalClient
                     return false;
                 }
 
-                if( $exception instanceof ConnectException ) {
+                if ($exception instanceof ConnectException) {
                     return true;
                 }
 
