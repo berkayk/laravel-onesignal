@@ -92,7 +92,7 @@ class OneSignalClient
                     return true;
                 }
 
-                if ($response && $response->getStatusCode() > 500) {
+                if ($response && $response->getStatusCode() >= 500) {
                     return true;
                 }
 
