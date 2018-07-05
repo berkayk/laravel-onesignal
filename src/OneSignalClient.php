@@ -71,6 +71,10 @@ class OneSignalClient
         $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
     }
 
+    private function requiresUserAuth() {
+        $this->headers['headers']['Authorization'] = 'Basic '.$this->userAuthKey;
+    }
+
     private function usesJSON() {
         $this->headers['headers']['Content-Type'] = 'application/json';
     }
@@ -300,7 +304,7 @@ class OneSignalClient
     }
 
     public function getApp($app_id = null) {
-        $this->requiresAuth();
+        $this->requiresUserAuth();
         $this->usesJSON();
 
         if(!$app_id)
@@ -310,7 +314,7 @@ class OneSignalClient
     }
 
     public function getApps() {
-        $this->requiresAuth();
+        $this->requiresUserAuth();
         $this->usesJSON();
 
         return $this->get(self::ENDPOINT_APPS);
