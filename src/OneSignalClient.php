@@ -10,6 +10,7 @@ class OneSignalClient
 
     const ENDPOINT_NOTIFICATIONS = "/notifications";
     const ENDPOINT_PLAYERS = "/players";
+    const ENDPOINT_APPS = "/apps";
 
     protected $client;
     protected $headers;
@@ -296,6 +297,23 @@ class OneSignalClient
             $app_id = $this->appId;
 
         return $this->get(self::ENDPOINT_NOTIFICATIONS . '/'.$notification_id . '?app_id='.$app_id);
+    }
+
+    public function getApp($app_id = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        if(!$app_id)
+            $app_id = $this->appId;
+
+        return $this->get(self::ENDPOINT_APPS . '/'.$app_id);
+    }
+
+    public function getApps() {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        return $this->get(self::ENDPOINT_APPS);
     }
 
     /**
