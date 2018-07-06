@@ -303,6 +303,29 @@ class OneSignalClient
         return $this->get(self::ENDPOINT_NOTIFICATIONS . '/'.$notification_id . '?app_id='.$app_id);
     }
 
+    public function getNotifications($app_id = null, $limit = null, $offset = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $endpoint = self::ENDPOINT_NOTIFICATIONS;
+        
+        if(!$app_id) {
+            $app_id = $this->appId;
+        }
+
+        $endpoint.='?app_id='.$app_id;
+
+        if($limit) {
+            $endpoint.="&limit=".$limit;
+        }
+
+        if($offset) {
+            $endpoint.="&offset=".$$offset;
+        }
+
+        return $this->get($endpoint);
+    }
+
     public function getApp($app_id = null) {
         $this->requiresUserAuth();
         $this->usesJSON();
