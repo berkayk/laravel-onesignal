@@ -367,6 +367,16 @@ class OneSignalClient
         return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
     }
 
+    public function requestPlayersCSV($app_id = null, Array $parameters = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $endpoint = self::ENDPOINT_PLAYERS."/csv_export?";
+        $endpoint .= "app_id" . $app_id?$app_id:$this->appId;
+
+        return $this->sendPlayer($parameters, 'POST', $endpoint);
+    }
+
     /**
      * Create or update a by $method value
      *
