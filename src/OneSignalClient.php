@@ -3,6 +3,13 @@
 namespace Berkayk\OneSignal;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use GuzzleHttp\Psr7\Response as Psr7Response;
 
 class OneSignalClient
 {
@@ -22,6 +29,16 @@ class OneSignalClient
      * @var bool
      */
     public $requestAsync = false;
+
+    /**
+     * @var int
+     */
+    public $maxRetries = 2;
+
+    /**
+     * @var int
+     */
+    public $retryDelay = 500;
 
     /**
      * @var Callable
@@ -57,9 +74,31 @@ class OneSignalClient
         $this->restApiKey = $restApiKey;
         $this->userAuthKey = $userAuthKey;
 
-        $this->client = new Client();
+        $this->client = new Client([
+            'handler' => $this->createGuzzleHandler(),
+        ]);
         $this->headers = ['headers' => []];
         $this->additionalParams = [];
+    }
+
+    private function createGuzzleHandler() {
+        return tap(HandlerStack::create(new CurlHandler()), function (HandlerStack $handlerStack) {
+            $handlerStack->push(Middleware::retry(function ($retries, Psr7Request $request, Psr7Response $response = null, RequestException $exception = null) {
+                if ($retries >= $this->maxRetries) {
+                    return false;
+                }
+
+                if ($exception instanceof ConnectException) {
+                    return true;
+                }
+
+                if ($response && $response->getStatusCode() >= 500) {
+                    return true;
+                }
+
+                return false;
+            }), $this->retryDelay);
+        });
     }
 
     public function testCredentials() {
