@@ -295,6 +295,16 @@ class OneSignalClient
         $this->sendNotificationCustom($params);
     }
 
+    public function deleteNotification($notificationId, $appId = null) {
+        $this->requiresAuth();
+
+        if(!$appId)
+            $appId = $this->appId;
+        $notificationCancelNode = "/$notificationId?app_id=$this->appId";
+        return $this->delete(self::ENDPOINT_NOTIFICATIONS . $notificationCancelNode);
+
+    }
+
     /**
      * Send a notification with custom parameters defined in
      * https://documentation.onesignal.com/reference#section-example-code-create-notification
@@ -399,5 +409,13 @@ class OneSignalClient
 
     public function get($endPoint) {
         return $this->client->get(self::API_URL . $endPoint, $this->headers);
+    }
+
+    public function delete($endPoint) {
+        if($this->requestAsync === true) {
+            $promise = $this->client->deleteAsync(self::API_URL . $endPoint, $this->headers);
+            return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
+        }
+        return $this->client->delete(self::API_URL . $endPoint, $this->headers);
     }
 }
