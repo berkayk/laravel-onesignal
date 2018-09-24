@@ -17,6 +17,16 @@
       "Berkayk\\OneSignal\\": "src/"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Berkayk\\OneSignal\\OneSignalServiceProvider"
+      ],
+      "aliases": {
+        "OneSignal": "Berkayk\\OneSignal\\OneSignalFacade"
+      }
+    }
+  },
   "license": "MIT",
   "authors": [
     {
