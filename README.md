@@ -16,6 +16,8 @@ composer require berkayk/onesignal-laravel
 
 Aftwards, run `composer update` from your command line.
 
+**You only need to do the following if your Laravel version is below 5.5**:
+
 Then, update `config/app.php` by adding an entry for the service provider.
 
 ```php
