@@ -18,7 +18,7 @@ class OneSignalServiceProvider extends ServiceProvider
         $this->publishes([$configPath => config_path('onesignal.php')], 'config');
         $this->mergeConfigFrom($configPath, 'onesignal');
 
-        if ( class_exists('Laravel\Lumen\Application') ) {
+        if (class_exists('Laravel\Lumen\Application')) {
             $this->app->configure('onesignal');
         }
     }
@@ -42,9 +42,8 @@ class OneSignalServiceProvider extends ServiceProvider
         });
     }
 
-    public function provides() {
+    public function provides()
+    {
         return ['onesignal'];
     }
-
-
 }
