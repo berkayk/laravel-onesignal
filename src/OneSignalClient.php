@@ -17,6 +17,7 @@ class OneSignalClient
 
     const ENDPOINT_NOTIFICATIONS = "/notifications";
     const ENDPOINT_PLAYERS = "/players";
+    const ENDPOINT_APPS = "/apps";
 
     protected $client;
     protected $headers;
@@ -107,6 +108,10 @@ class OneSignalClient
 
     private function requiresAuth() {
         $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
+    }
+
+    private function requiresUserAuth() {
+        $this->headers['headers']['Authorization'] = 'Basic '.$this->userAuthKey;
     }
 
     private function usesJSON() {
@@ -347,6 +352,46 @@ class OneSignalClient
         return $this->get(self::ENDPOINT_NOTIFICATIONS . '/'.$notification_id . '?app_id='.$app_id);
     }
 
+    public function getNotifications($app_id = null, $limit = null, $offset = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $endpoint = self::ENDPOINT_NOTIFICATIONS;
+        
+        if(!$app_id) {
+            $app_id = $this->appId;
+        }
+
+        $endpoint.='?app_id='.$app_id;
+
+        if($limit) {
+            $endpoint.="&limit=".$limit;
+        }
+
+        if($offset) {
+            $endpoint.="&offset=".$$offset;
+        }
+
+        return $this->get($endpoint);
+    }
+
+    public function getApp($app_id = null) {
+        $this->requiresUserAuth();
+        $this->usesJSON();
+
+        if(!$app_id)
+            $app_id = $this->appId;
+
+        return $this->get(self::ENDPOINT_APPS . '/'.$app_id);
+    }
+
+    public function getApps() {
+        $this->requiresUserAuth();
+        $this->usesJSON();
+
+        return $this->get(self::ENDPOINT_APPS);
+    }
+
     /**
      * Creates a user/player
      *
@@ -369,6 +414,16 @@ class OneSignalClient
      */
     public function editPlayer(Array $parameters) {
         return $this->sendPlayer($parameters, 'PUT', self::ENDPOINT_PLAYERS . '/' . $parameters['id']);
+    }
+
+    public function requestPlayersCSV($app_id = null, Array $parameters = null) {
+        $this->requiresAuth();
+        $this->usesJSON();
+
+        $endpoint = self::ENDPOINT_PLAYERS."/csv_export?";
+        $endpoint .= "app_id" . $app_id?$app_id:$this->appId;
+
+        return $this->sendPlayer($parameters, 'POST', $endpoint);
     }
 
     /**
