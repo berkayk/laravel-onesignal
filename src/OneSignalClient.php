@@ -174,6 +174,57 @@ class OneSignalClient
         $this->sendNotificationCustom($params);
     }
 
+    /**
+     * @param $message
+     * @param $userId
+     * @param null $url
+     * @param null $data
+     * @param null $buttons
+     * @param null $schedule
+     * @param null $headings
+     * @param null $subtitle
+     */
+    public function sendNotificationToExternalUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+        $contents = array(
+            "en" => $message
+        );
+
+        $params = array(
+            'app_id' => $this->appId,
+            'contents' => $contents,
+            'include_external_user_ids' => is_array($userId) ? $userId : array($userId)
+        );
+
+        if (isset($url)) {
+            $params['url'] = $url;
+        }
+
+        if (isset($data)) {
+            $params['data'] = $data;
+        }
+
+        if (isset($buttons)) {
+            $params['buttons'] = $buttons;
+        }
+
+        if(isset($schedule)){
+            $params['send_after'] = $schedule;
+        }
+
+        if(isset($headings)){
+            $params['headings'] = array(
+                "en" => $headings
+            );
+        }
+
+        if(isset($subtitle)){
+            $params['subtitle'] = array(
+                "en" => $subtitle
+            );
+        }
+
+        $this->sendNotificationCustom($params);
+    }
     public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
         $contents = array(
             "en" => $message
