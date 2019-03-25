@@ -173,6 +173,48 @@ class OneSignalClient
 
         $this->sendNotificationCustom($params);
     }
+    
+    public function sendNotificationToLocalUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+        $contents = array(
+            "en" => $message
+        );
+
+        $params = array(
+            'app_id' => $this->appId,
+            'contents' => $contents,
+            'include_external_user_ids' => is_array($userId) ? $userId : array($userId)
+        );
+
+        if (isset($url)) {
+            $params['url'] = $url;
+        }
+
+        if (isset($data)) {
+            $params['data'] = $data;
+        }
+
+        if (isset($buttons)) {
+            $params['buttons'] = $buttons;
+        }
+
+        if(isset($schedule)){
+            $params['send_after'] = $schedule;
+        }
+
+        if(isset($headings)){
+            $params['headings'] = array(
+                "en" => $headings
+            );
+        }
+        
+        if(isset($subtitle)){
+            $params['subtitle'] = array(
+                "en" => $subtitle
+            );
+        }
+
+        $this->sendNotificationCustom($params);
+    }
 
     public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
         $contents = array(
