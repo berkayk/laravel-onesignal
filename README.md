@@ -137,6 +137,27 @@ Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additio
 a `$url` parameter, users will be redirecting to that url.
 
 
+
+### Sending a Notification To A Specific external User (custom user id added by user)
+
+After storing a user's tokens in a table, you can simply send a message with
+
+```php
+    OneSignal::sendNotificationToExternalUser(
+        "Some Message",
+        $userId,
+        $url = null,
+        $data = null,
+        $buttons = null,
+        $schedule = null
+    );
+```
+
+`$userId` is the user's unique external id (custom id) added by the user where he/she is registered for notifications.
+Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
+`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide
+a `$url` parameter, users will be redirecting to that url.
+
 ### Sending a Notification To Segment
 
 You can simply send a notification to a specific segment with
