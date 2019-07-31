@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Berkayk\\OneSignal\\": "src/"
+      "MarceloPetrucio\\OneSignal\\": "src/"
     }
   },
   "extra": {
