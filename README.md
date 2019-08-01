@@ -48,7 +48,8 @@ php artisan vendor:publish --tag=config
 
 to publish the default configuration file. 
 This will publish a configuration file named `onesignal.php` which includes 
-your OneSignal authorization keys.
+your apps ID and your OneSignal authorization keys.
+
 
 > **Note:** If the previous command does not publish the config file successfully, 
 > please check the steps involving *providers* and *aliases* in the `config/app.php` file.
@@ -66,13 +67,9 @@ You need to fill in `onesignal.php` file that is found in your applications `con
 You can easily send a message to all registered users with the command
 
 ```php
-    OneSignal::sendNotificationToAll(
-        "Some Message", 
-        $url = null, 
-        $data = null, 
-        $buttons = null, 
-        $schedule = null
-    );
+    OneSignal::app("appNumberOne")
+        ->message("Some Message")                    
+        ->send();
 ```
     
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
@@ -86,34 +83,27 @@ You can send a message based on a set of tags with the command
   ##### Example 1:
 
 ```php
-    OneSignal::sendNotificationUsingTags(
-        "Some Message",
-        array(
-            ["field" => "email", "relation" => "=", "value" => "email21@example.com"],
-            ["field" => "email", "relation" => "=", "value" => "email1@example.com"],
-            ...
-        ),
-        $url = null,
-        $data = null,
-        $buttons = null,
-        $schedule = null
-    );
+    OneSignal::app("appNumberOne")
+        ->message("Some Message") 
+        ->filters(
+	    array(
+	        ["field" => "email", "relation" => "=", "value" => "email21@example.com"],
+	        ["field" => "email", "relation" => "=", "value" => "email1@example.com"],
+	    )
+        )->send();
 ```
     
   ##### Example 2:
 
 ```php
-    OneSignal::sendNotificationUsingTags(
-        "Some Message",
-        array(
-            ["field" => "session_count", "relation" => ">", "value" => '2'],
-            ["field" => "first_session", "relation" => ">", "value" => '2000'],
-        ),
-        $url = null,
-        $data = null,
-        $buttons = null,
-        $schedule = null
-    );
+    OneSignal::app("appNumberOne")
+        ->message("Some Message") 
+        ->filters(
+	    array(
+	        ["field" => "session_count", "relation" => ">", "value" => '2'],
+	        ["field" => "first_session", "relation" => ">", "value" => '2000'],
+	    )
+        )->send();
 ```
 
 ### Sending a Notification To A Specific User
@@ -121,56 +111,27 @@ You can send a message based on a set of tags with the command
 After storing a user's tokens in a table, you can simply send a message with
 
 ```php
-    OneSignal::sendNotificationToUser(
-        "Some Message",
-        $userId,
-        $url = null,
-        $data = null,
-        $buttons = null,
-        $schedule = null
-    );
+    OneSignal::app("app_teste")
+        ->message("Some Message") 
+        ->includePlayerIds("ID_USER")
+        ->send();
 ```
     
-`$userId` is the user's unique id where he/she is registered for notifications. 
+`ID_USER` is the user's unique id where he/she is registered for notifications. 
 Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide 
 a `$url` parameter, users will be redirecting to that url.
 
-
-
-### Sending a Notification To A Specific external User (custom user id added by user)
-
-After storing a user's tokens in a table, you can simply send a message with
-
-```php
-    OneSignal::sendNotificationToExternalUser(
-        "Some Message",
-        $userId,
-        $url = null,
-        $data = null,
-        $buttons = null,
-        $schedule = null
-    );
-```
-
-`$userId` is the user's unique external id (custom id) added by the user where he/she is registered for notifications.
-Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide
-a `$url` parameter, users will be redirecting to that url.
 
 ### Sending a Notification To Segment
 
 You can simply send a notification to a specific segment with
 
 ```php
-    OneSignal::sendNotificationToSegment(
-        "Some Message",
-        $segment,
-        $url = null,
-        $data = null,
-        $buttons = null,
-        $schedule = null
-    );
+    OneSignal::app("app_teste")
+    	->message("Some Message") 
+    	->includedSegments("SEGMENT")
+    	->send();
 ```
     
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
