@@ -21,10 +21,10 @@ class OneSignalClient
 
     protected $client;
     protected $headers;
-    protected $appId;
-    protected $restApiKey;
-    protected $userAuthKey;
     protected $additionalParams;
+    protected $appsConfig;
+    protected $currentAppConfig;
+    protected $currentParams;
 
     /**
      * @var bool
@@ -69,11 +69,9 @@ class OneSignalClient
         return $this;
     }
 
-    public function __construct($appId, $restApiKey, $userAuthKey)
+    public function __construct(array $appsConfig)
     {
-        $this->appId = $appId;
-        $this->restApiKey = $restApiKey;
-        $this->userAuthKey = $userAuthKey;
+        $this->appsConfig = $appsConfig;
 
         $this->client = new Client([
             'handler' => $this->createGuzzleHandler(),
@@ -103,15 +101,15 @@ class OneSignalClient
     }
 
     public function testCredentials() {
-        return "APP ID: ".$this->appId." REST: ".$this->restApiKey;
+        return "APP ID: ".$this->currentAppConfig['app_id']." REST: ".$this->currentAppConfig['rest_api_key'];
     }
 
     private function requiresAuth() {
-        $this->headers['headers']['Authorization'] = 'Basic '.$this->restApiKey;
+        $this->headers['headers']['Authorization'] = 'Basic '.$this->currentAppConfig['rest_api_key'];
     }
 
     private function requiresUserAuth() {
-        $this->headers['headers']['Authorization'] = 'Basic '.$this->userAuthKey;
+        $this->headers['headers']['Authorization'] = 'Basic '.$this->currentAppConfig['user_auth_key'];
     }
 
     private function usesJSON() {
@@ -132,231 +130,153 @@ class OneSignalClient
         return $this;
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
-        $contents = array(
-            "en" => $message
-        );
-
-        $params = array(
-            'app_id' => $this->appId,
-            'contents' => $contents,
-            'include_player_ids' => is_array($userId) ? $userId : array($userId)
-        );
-
-        if (isset($url)) {
-            $params['url'] = $url;
-        }
-
-        if (isset($data)) {
-            $params['data'] = $data;
-        }
-
-        if (isset($buttons)) {
-            $params['buttons'] = $buttons;
-        }
-
-        if(isset($schedule)){
-            $params['send_after'] = $schedule;
-        }
-
-        if(isset($headings)){
-            $params['headings'] = array(
-                "en" => $headings
-            );
-        }
-        
-        if(isset($subtitle)){
-            $params['subtitle'] = array(
-                "en" => $subtitle
-            );
-        }
-
-        $this->sendNotificationCustom($params);
+    public function app($appName){
+        $this->currentAppConfig = $this->appsConfig[$appName];
+        $this->currentParams['app_id'] = $this->appsConfig[$appName]['app_id'];
+        return $this;
     }
 
-    /**
-     * @param $message
-     * @param $userId
-     * @param null $url
-     * @param null $data
-     * @param null $buttons
-     * @param null $schedule
-     * @param null $headings
-     * @param null $subtitle
-     */
-    public function sendNotificationToExternalUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
-        $contents = array(
-            "en" => $message
-        );
-
-        $params = array(
-            'app_id' => $this->appId,
-            'contents' => $contents,
-            'include_external_user_ids' => is_array($userId) ? $userId : array($userId)
-        );
-
-        if (isset($url)) {
-            $params['url'] = $url;
-        }
-
-        if (isset($data)) {
-            $params['data'] = $data;
-        }
-
-        if (isset($buttons)) {
-            $params['buttons'] = $buttons;
-        }
-
-        if(isset($schedule)){
-            $params['send_after'] = $schedule;
-        }
-
-        if(isset($headings)){
-            $params['headings'] = array(
-                "en" => $headings
-            );
-        }
-
-        if(isset($subtitle)){
-            $params['subtitle'] = array(
-                "en" => $subtitle
-            );
-        }
-
-        $this->sendNotificationCustom($params);
-    }
-    public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
-        $contents = array(
-            "en" => $message
-        );
-
-        $params = array(
-            'app_id' => $this->appId,
-            'contents' => $contents,
-            'filters' => $tags,
-        );
-
-        if (isset($url)) {
-            $params['url'] = $url;
-        }
-
-        if (isset($data)) {
-            $params['data'] = $data;
-        }
-
-        if (isset($buttons)) {
-            $params['buttons'] = $buttons;
-        }
-
-        if(isset($schedule)){
-            $params['send_after'] = $schedule;
-        }
-
-        if(isset($headings)){
-            $params['headings'] = array(
-                "en" => $headings
-            );
-        }
-        
-        if(isset($subtitle)){
-            $params['subtitle'] = array(
-                "en" => $subtitle
-            );
-        }
-
-        $this->sendNotificationCustom($params);
+    public function channelId($channelId){
+        $this->currentParams['android_channel_id'] = $channelId;
+        return $this;
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
-        $contents = array(
-            "en" => $message
-        );
-
-        $params = array(
-            'app_id' => $this->appId,
-            'contents' => $contents,
-            'included_segments' => array('All')
-        );
-
-        if (isset($url)) {
-            $params['url'] = $url;
-        }
-
-        if (isset($data)) {
-            $params['data'] = $data;
-        }
-
-        if (isset($buttons)) {
-            $params['buttons'] = $buttons;
-        }
-
-        if(isset($schedule)){
-            $params['send_after'] = $schedule;
-        }
-
-        if(isset($headings)){
-            $params['headings'] = array(
-                "en" => $headings
-            );
-        }
-        
-        if(isset($subtitle)){
-            $params['subtitle'] = array(
-                "en" => $subtitle
-            );
-        }
-
-        $this->sendNotificationCustom($params);
+    public function getChannelId(){
+        return $this->currentParams['android_channel_id'];
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
-        $contents = array(
+    public function message($message){
+        $this->currentParams['contents'] = array(
             "en" => $message
         );
+        return $this;
+    }
 
-        $params = array(
-            'app_id' => $this->appId,
-            'contents' => $contents,
-            'included_segments' => [$segment]
+    public function getMessage($message){
+        return $this->currentParams['contents']['en'];
+    }
+
+    public function url($url){
+        $this->currentParams['url'] = $url;
+        return $this;
+    }
+
+    public function getUrl(){
+        $this->currentParams['url'];
+    }
+
+    public function data($data){
+        $this->currentParams['data'] = $data;
+        return $this;
+    }
+
+    public function getData(){
+        return $this->currentParams['data'];
+    }
+
+    public function buttons($buttons){
+        $this->currentParams['buttons'] = $buttons;
+        return $this;
+    }
+
+    public function getButtons(){
+        return $this->currentParams['buttons'];
+    }
+    
+    public function schedule($schedule){
+        $this->currentParams['send_after'] = $schedule;
+        return $this;
+    }
+
+    public function getSchedule(){
+        return $this->currentParams['send_after'];
+    }
+
+    public function headings($headings){
+        $this->currentParams['headings'] = array(
+            "en" => $headings
         );
+        return $this;
+    }
 
-        if (isset($url)) {
-            $params['url'] = $url;
-        }
+    public function getHeadings(){
+        return $this->currentParams['headings']['en'];
+    }
 
-        if (isset($data)) {
-            $params['data'] = $data;
-        }
+    public function subtitle($subtitle){
+        $this->currentParams['subtitle'] = array(
+            "en" => $subtitle
+        );
+        return $this;
+    }
 
-        if (isset($buttons)) {
-            $params['buttons'] = $buttons;
-        }
+    public function getSubtitle(){
+        return $this->currentParams['subtitle']['en'];
+    }
 
-        if(isset($schedule)){
-            $params['send_after'] = $schedule;
-        }
+    public function accentColor($accentColor){
+        $this->currentParams['android_accent_color'] = $accentColor;
+        return $this;
+    }
 
-        if(isset($headings)){
-            $params['headings'] = array(
-                "en" => $headings
-            );
-        }
-        
-        if(isset($subtitle)){
-            $params['subtitle'] = array(
-                "en" => $subtitle
-            );
-        }
+    public function getAccentColor(){
+        return $this->currentParams['android_accent_color'];
+    }
 
-        $this->sendNotificationCustom($params);
+    public function largeIcon($largeIcon){
+        $this->currentParams['large_icon'] = $largeIcon;
+        return $this;
+    }
+
+    public function getLargeIcon(){
+        return $this->currentParams['large_icon'];
+    }
+
+    public function includedSegments($includedSegments){
+        $this->currentParams['included_segments'] = $includedSegments;
+        return $this;
+    }
+
+    public function getIncludedSegments(){
+        return isset($this->currentParams['included_segments']) ? $this->currentParams['included_segments'] : null;
+    }
+
+    public function includePlayerIds($includePlayerIds){
+        $this->currentParams['include_player_ids'] = s_array($includePlayerIds) ? $includePlayerIds : array($includePlayerIds);
+        return $this;        
+    }
+
+    public function getIncludePlayerIds(){
+        return isset($this->currentParams['include_player_ids']) ? $this->currentParams['include_player_ids'] : null;
+    }
+
+    public function filters($filters){
+        $this->currentParams['filters'] = $filters;
+        return $this;
+    }
+
+    public function getFilters(){
+        return isset($this->currentParams['filters']) ? $this->currentParams['filters'] : null;
+    }
+
+    public function hasNeedAddIncludedSegment(){
+        return $this->getIncludePlayerIds() == null && $this->getIncludedSegments() == null && $this->getFilters() == null;
+    }
+
+    public function send(){
+        if ($this->hasNeedAddIncludedSegment()){
+            $this->includedSegments(array('All'));
+        }
+        $this->sendNotificationCustom($this->currentParams);
+        return $this;
     }
 
     public function deleteNotification($notificationId, $appId = null) {
         $this->requiresAuth();
 
         if(!$appId)
-            $appId = $this->appId;
-        $notificationCancelNode = "/$notificationId?app_id=$this->appId";
+            $appId = $this->currentAppConfig['app_id'];
+        $notificationCancelNode = "/$notificationId?app_id=$this->currentAppConfig['app_id']";
         return $this->delete(self::ENDPOINT_NOTIFICATIONS . $notificationCancelNode);
 
     }
@@ -377,7 +297,7 @@ class OneSignalClient
 
         // Make sure to use app_id
         if (!isset($parameters['app_id'])) {
-            $parameters['app_id'] = $this->appId;
+            $parameters['app_id'] = $this->currentAppConfig['app_id'];
         }
 
         // Make sure to use included_segments
@@ -398,7 +318,7 @@ class OneSignalClient
         $this->usesJSON();
 
         if(!$app_id)
-            $app_id = $this->appId;
+            $app_id = $this->currentAppConfig['app_id'];
 
         return $this->get(self::ENDPOINT_NOTIFICATIONS . '/'.$notification_id . '?app_id='.$app_id);
     }
@@ -410,7 +330,7 @@ class OneSignalClient
         $endpoint = self::ENDPOINT_NOTIFICATIONS;
         
         if(!$app_id) {
-            $app_id = $this->appId;
+            $app_id = $this->currentAppConfig['app_id'];
         }
 
         $endpoint.='?app_id='.$app_id;
@@ -431,7 +351,7 @@ class OneSignalClient
         $this->usesJSON();
 
         if(!$app_id)
-            $app_id = $this->appId;
+            $app_id = $this->currentAppConfig['app_id'];
 
         return $this->get(self::ENDPOINT_APPS . '/'.$app_id);
     }
@@ -472,7 +392,7 @@ class OneSignalClient
         $this->usesJSON();
 
         $endpoint = self::ENDPOINT_PLAYERS."/csv_export?";
-        $endpoint .= "app_id" . $app_id?$app_id:$this->appId;
+        $endpoint .= "app_id" . $app_id?$app_id:$this->currentAppConfig['app_id'];
 
         return $this->sendPlayer($parameters, 'POST', $endpoint);
     }
@@ -490,7 +410,7 @@ class OneSignalClient
         $this->requiresAuth();
         $this->usesJSON();
 
-        $parameters['app_id'] = $this->appId;
+        $parameters['app_id'] = $this->currentAppConfig['app_id'];
         $this->headers['body'] = json_encode($parameters);
 
         $method = strtolower($method);

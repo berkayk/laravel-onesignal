@@ -1,5 +1,5 @@
 {
-  "name": "MarceloPetrucio/onesignal-laravel",
+  "name": "berkayk/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
@@ -14,16 +14,16 @@
   },
   "autoload": {
     "psr-4": {
-      "MarceloPetrucio\\OneSignal\\": "src/"
+      "Berkayk\\OneSignal\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "MarceloPetrucio\\OneSignal\\OneSignalServiceProvider"
+        "Berkayk\\OneSignal\\OneSignalServiceProvider"
       ],
       "aliases": {
-        "OneSignal": "MarceloPetrucio\\OneSignal\\OneSignalFacade"
+        "OneSignal": "Berkayk\\OneSignal\\OneSignalFacade"
       }
     }
   },
