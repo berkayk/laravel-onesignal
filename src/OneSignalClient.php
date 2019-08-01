@@ -10,6 +10,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use GuzzleHttp\Psr7\Response as Psr7Response;
+use Exception;
 
 class OneSignalClient
 {
@@ -242,7 +243,7 @@ class OneSignalClient
     }
 
     public function includePlayerIds($includePlayerIds){
-        $this->currentParams['include_player_ids'] = s_array($includePlayerIds) ? $includePlayerIds : array($includePlayerIds);
+        $this->currentParams['include_player_ids'] = is_array($includePlayerIds) ? $includePlayerIds : array($includePlayerIds);
         return $this;        
     }
 
@@ -263,9 +264,36 @@ class OneSignalClient
         return $this->getIncludePlayerIds() == null && $this->getIncludedSegments() == null && $this->getFilters() == null;
     }
 
+    public function hasSettedAppId(){
+        return isset($this->currentParams['app_id']);
+    }
+
+    public function hasAppName($appName){
+        return isset($this->appsConfig[$appName]);
+    }
+
+    public function appsConfigIsEmpty(){
+        return count($this->appsConfig) == 0;
+    }
+
+    public function needSetAppId(){
+        return !$this->hasSettedAppId();
+    }
+
+    public function canSetAppId(){
+        return !$this->appsConfigIsEmpty();
+    }
+
+    public function setFirstAppConfig(){
+        $this->app(array_keys($this->appsConfig)[3]);
+    }
+
     public function send(){
         if ($this->hasNeedAddIncludedSegment()){
             $this->includedSegments(array('All'));
+        }
+        if ( $this->needSetAppId() && $this->canSetAppId() ){
+            $this->setFirstAppConfig();
         }
         $this->sendNotificationCustom($this->currentParams);
         return $this;
