@@ -14,7 +14,7 @@ the steps that is necessary to obtain an application id and REST API Keys.
 First, you'll need to require the package with Composer:
 
 ```sh
-composer require berkayk/onesignal-laravel
+composer require marcelopetrucio/onesignal-laravel
 ```
 
 Afterwards, run `composer update` from your command line.
@@ -71,10 +71,6 @@ You can easily send a message to all registered users with the command
         ->message("Some Message")                    
         ->send();
 ```
-    
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
-provide a `$url` parameter, users will be redirecting to that url.
-    
 
 ### Sending a Notification based on Tags/Filters
 
@@ -119,9 +115,6 @@ After storing a user's tokens in a table, you can simply send a message with
     
 `ID_USER` is the user's unique id where he/she is registered for notifications. 
 Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide 
-a `$url` parameter, users will be redirecting to that url.
-
 
 ### Sending a Notification To Segment
 
@@ -133,9 +126,6 @@ You can simply send a notification to a specific segment with
     	->includedSegments("SEGMENT")
     	->send();
 ```
-    
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
-provide a `$url` parameter, users will be redirecting to that url.
 
 ### Sending a Custom Notification
 
