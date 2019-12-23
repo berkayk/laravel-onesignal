@@ -1,23 +1,18 @@
 <?php
 
-return array(
+return [
     /*
     |--------------------------------------------------------------------------
     | One Signal App Id
     |--------------------------------------------------------------------------
-    |
-    |
     */
-    'app_id' => 'YOUR-APP-ID-HERE',
+    'app_id' => env('ONESIGNAL_APP_ID'),
 
     /*
     |--------------------------------------------------------------------------
     | Rest API Key
     |--------------------------------------------------------------------------
-    |
-    |
-    |
     */
-    'rest_api_key' => 'YOUR-REST-API-KEY-HERE',
-    'user_auth_key' => 'YOUR-USER-AUTH-KEY'
-);
+    'rest_api_key' => env('ONESIGNAL_API_KEY'),
+    'user_auth_key' => env('ONESIGNAL_AUTH_KEY')
+];
