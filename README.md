@@ -1,4 +1,4 @@
-#  OneSignal Push Notifications for Laravel 5
+#  OneSignal Push Notifications for Laravel 5+
 
 ## Introduction
 
