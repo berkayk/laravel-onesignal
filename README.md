@@ -188,8 +188,6 @@ You can send a custom message with
 ```php
     OneSignal::sendNotificationCustom($parameters);
 ```
-    
-### Sending a Custom Notification
 
 ### Sending a async Custom Notification
 You can send a async custom message with 
