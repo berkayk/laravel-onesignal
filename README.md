@@ -137,7 +137,7 @@ After storing a user's tokens in a table, you can simply send a message with
 ```
     
 `$userId` is the user's unique id where he/she is registered for notifications. 
-Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
+Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide 
 a `$url` parameter, users will be redirecting to that url.
 
@@ -159,7 +159,7 @@ After storing a user's tokens in a table, you can simply send a message with
 ```
 
 `$userId` is the user's unique external id (custom id) added by the user where he/she is registered for notifications.
-Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
+Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide
 a `$url` parameter, users will be redirecting to that url.
 
