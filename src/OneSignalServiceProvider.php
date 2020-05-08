@@ -31,7 +31,7 @@ class OneSignalServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('onesignal', function ($app) {
-            $config = isset($app['config']['services']['onesignal']) ? $app['config']['services']['onesignal'] : null;
+            $config = !isset($app['config']['services']['onesignal']) ? $app['config']['services']['onesignal'] : null;
             if (is_null($config)) {
                 $config = $app['config']['onesignal'] ?: $app['config']['onesignal::config'];
             }
