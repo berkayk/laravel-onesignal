@@ -266,6 +266,53 @@ class OneSignalClient
 
         $this->sendNotificationCustom($params);
     }
+	
+	public function sendNotificationUsingTagsAndImage($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $image = null) {
+		$contents = array(
+			"en" => $message
+		);
+		
+		$params = array(
+			'app_id' => $this->appId,
+			'contents' => $contents,
+			'filters' => $tags,
+		);
+		
+		if (isset($url)) {
+			$params['url'] = $url;
+		}
+		
+		if (isset($data)) {
+			$params['data'] = $data;
+		}
+		
+		if (isset($buttons)) {
+			$params['buttons'] = $buttons;
+		}
+		
+		if(isset($schedule)){
+			$params['send_after'] = $schedule;
+		}
+		
+		if(isset($headings)){
+			$params['headings'] = array(
+				"en" => $headings
+			);
+		}
+		
+		if(isset($subtitle)){
+			$params['subtitle'] = array(
+				"en" => $subtitle
+			);
+		}
+		
+		if(isset($image)){
+			$params['big_picture'] = $image;
+			$params['ios_attachments	'] = ["id" => $image];
+		}
+		
+		$this->sendNotificationCustom($params);
+	}
 
     public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
         $contents = array(
