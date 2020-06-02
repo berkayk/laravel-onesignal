@@ -308,7 +308,7 @@ class OneSignalClient
 		
 		if(isset($image)){
 			$params['big_picture'] = $image;
-			$params['ios_attachments	'] = ["id" => $image];
+			$params['ios_attachments'] = ["id" => $image];
 		}
 		
 		$this->sendNotificationCustom($params);
