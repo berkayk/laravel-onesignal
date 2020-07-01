@@ -207,7 +207,7 @@ Some people found examples confusing, so I am going to provide some detailed exa
 
 You need to customize `android_accent_color` and `small_icon` values before sending your notifications. These are `parameters` that you need to specify while sending your notifications.
 
-````
+```php
 use OneSignal;
 
 $params = [];
@@ -224,13 +224,13 @@ OneSignal::addParams($params)->sendNotificationToSegment(
 // or to all users 
 OneSignal::addParams($params)->sendNotificationToAll($message);
 
-````
+```
 
 ### 2. Sending a message with high priority
 
 This time, we will specify parameters one by one.
 
-````
+```php
 use OneSignal;
 
 $message = "Test message to send";
@@ -244,11 +244,11 @@ OneSignal::setParam('priority', 10)->sendNotificationToSegment(
 
 OneSignal::setParam('priority', 10)->setParam('small_icon', 'ic_stat_onesignal_default')->setParam('led_color', 'FFAACCAA')->sendNotificationToAll($message);
 
-````
+```
 
 ### 3. Sending a message with custom heading and subtitle
 
-````
+```php
 use OneSignal;
 
 OneSignal::sendNotificationToSegment(
@@ -258,11 +258,11 @@ OneSignal::sendNotificationToSegment(
                 "Custom Heading", 
                 "Custom subtitle"
             );
-````
+```
 
 ### 4. Sending a delayed message to a specific user with many custom parameters
 
-````
+```php
 use OneSignal;
 
 $userId = "3232331-1722-4fee-943d-23123asda123"; 
@@ -278,4 +278,4 @@ $params['delivery_time_of_day'] = "2:30PM"; // Delivery time
 
 OneSignal::sendNotificationCustom($params);
 
-````
+```
