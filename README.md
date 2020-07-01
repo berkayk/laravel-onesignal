@@ -184,8 +184,6 @@ You can send a custom message with
     OneSignal::sendNotificationCustom($parameters);
 ```
     
-### Sending a Custom Notification
-
 ### Sending a async Custom Notification
 You can send a async custom message with 
 
@@ -195,3 +193,83 @@ You can send a async custom message with
     
 Please refer to https://documentation.onesignal.com/reference for all customizable parameters.
 
+## Examples
+
+Some people found examples confusing, so I am going to provide some detailed examples that I use in my applications. These examples will probably guide you on customizing your notifications. For custom parameters, please refer to https://documentation.onesignal.com/reference/create-notification.
+
+### 1) Sending a message to a segment with custom icon and custom icon color
+
+You need to customize `android_accent_color` and `small_icon` values before sending your notifications. These are `parameters` that you need to specify while sending your notifications.
+
+````
+use OneSignal;
+
+$params = [];
+$params['android_accent_color'] = 'FFCCAA72'; // argb color value
+$params['small_icon'] = 'ic_stat_distriqt_default'; // icon res name specified in your app
+
+$message = "Test message to send";
+$segment = "Testers";
+OneSignal::addParams($params)->sendNotificationToSegment(
+                $message,
+                $segment
+            );
+
+// or to all users 
+OneSignal::addParams($params)->sendNotificationToAll($message);
+
+````
+
+### 2. Sending a message with high priority
+
+This time, we will specify parameters one by one.
+
+````
+use OneSignal;
+
+$message = "Test message to send";
+$segment = "Testers";
+OneSignal::setParam('priority', 10)->sendNotificationToSegment(
+                $message,
+                $segment
+            );
+
+// You can chain as many parameters as you wish
+
+OneSignal::setParam('priority', 10)->setParam('small_icon', 'ic_stat_onesignal_default')->setParam('led_color', 'FFAACCAA')->sendNotificationToAll($message);
+
+````
+
+### 3. Sending a message with custom heading and subtitle
+
+````
+use OneSignal;
+
+OneSignal::sendNotificationToSegment(
+                "Test message with custom heading and subtitle",
+                "Testers", 
+                null, null, null, null, 
+                "Custom Heading", 
+                "Custom subtitle"
+            );
+````
+
+### 4. Sending a delayed message to a specific user with many custom parameters
+
+````
+use OneSignal;
+
+$userId = "3232331-1722-4fee-943d-23123asda123"; 
+$params = []; 
+$params['include_player_ids'] = [$userId]; 
+$contents = [ 
+   "en" => "Some English Message", 
+   "tr" => "Some Turkish Message"
+]; 
+$params['contents'] = $contents; 
+$params['delayed_option'] = "timezone"; // Will deliver on user's timezone 
+$params['delivery_time_of_day'] = "2:30PM"; // Delivery time
+
+OneSignal::sendNotificationCustom($params);
+
+````
