@@ -1,4 +1,9 @@
-#  OneSignal Push Notifications for Laravel 5
+# OneSignal Push Notifications for Laravel
+[![Latest Stable Version](https://poser.pugx.org/berkayk/onesignal-laravel/v/stable)](https://packagist.org/packages/berkayk/onesignal-laravel)
+[![Total Downloads](https://poser.pugx.org/berkayk/onesignal-laravel/downloads)](https://packagist.org/packages/berkayk/onesignal-laravel)
+[![License](https://poser.pugx.org/berkayk/onesignal-laravel/license)](https://packagist.org/packages/berkayk/onesignal-laravel)
+
+
 
 ## Introduction
 
@@ -132,7 +137,7 @@ After storing a user's tokens in a table, you can simply send a message with
 ```
     
 `$userId` is the user's unique id where he/she is registered for notifications. 
-Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
+Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide 
 a `$url` parameter, users will be redirecting to that url.
 
@@ -154,7 +159,7 @@ After storing a user's tokens in a table, you can simply send a message with
 ```
 
 `$userId` is the user's unique external id (custom id) added by the user where he/she is registered for notifications.
-Read https://documentation.onesignal.com/docs/web-push-tagging-guide for additional details.
+Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide
 a `$url` parameter, users will be redirecting to that url.
 
@@ -183,6 +188,7 @@ You can send a custom message with
 ```php
     OneSignal::sendNotificationCustom($parameters);
 ```
+
     
 ### Sending a async Custom Notification
 You can send a async custom message with 
