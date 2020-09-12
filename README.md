@@ -94,8 +94,8 @@ You can send a message based on a set of tags with the command
     OneSignal::sendNotificationUsingTags(
         "Some Message",
         array(
-            ["key" => "email", "relation" => "=", "value" => "email21@example.com"],
-            ["key" => "email", "relation" => "=", "value" => "email1@example.com"],
+            ["field" => "tag", "key" => "email", "relation" => "=", "value" => "email21@example.com"],
+            ["field" => "tag", "key" => "email", "relation" => "=", "value" => "email1@example.com"],
             ...
         ),
         $url = null,
@@ -111,8 +111,8 @@ You can send a message based on a set of tags with the command
     OneSignal::sendNotificationUsingTags(
         "Some Message",
         array(
-            ["key" => "session_count", "relation" => ">", "value" => '2'],
-            ["key" => "first_session", "relation" => ">", "value" => '2000'],
+            ["field" => "tag", "key" => "session_count", "relation" => ">", "value" => '2'],
+            ["field" => "tag", "key" => "first_session", "relation" => ">", "value" => '2000'],
         ),
         $url = null,
         $data = null,
