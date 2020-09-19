@@ -8,7 +8,7 @@ return array(
 	|
 	|
 	*/
-    'app_id' => 'YOUR-APP-ID-HERE',
+    'app_id' => env('ONESIGNAL_APP_ID'),
 
     /*
 	|--------------------------------------------------------------------------
@@ -18,6 +18,6 @@ return array(
     |
 	|
 	*/
-    'rest_api_key' => 'YOUR-REST-API-KEY-HERE',
-    'user_auth_key' => 'YOUR-USER-AUTH-KEY'
+    'rest_api_key' => env('ONESIGNAL_REST_API_KEY'),
+    'user_auth_key' => env('USER_AUTH_KEY')
 );
