@@ -48,7 +48,7 @@ Then, register class alias by adding an entry in aliases section
 Finally, from the command line again, run 
 
 ```
-php artisan vendor:publish --tag=config
+php artisan vendor:publish --provider="Berkayk\OneSignal\OneSignalServiceProvider" --tag="config"
 ``` 
 
 to publish the default configuration file. 
