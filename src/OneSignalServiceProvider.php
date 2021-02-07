@@ -14,6 +14,7 @@ class OneSignalServiceProvider extends ServiceProvider
     public function boot()
     {
         $configPath = __DIR__ . '/../config/onesignal.php';
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'OneSignal');
 
         $this->publishes([$configPath => config_path('onesignal.php')], 'config');
         $this->mergeConfigFrom($configPath, 'onesignal');
