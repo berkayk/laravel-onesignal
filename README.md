@@ -185,6 +185,10 @@ You can simply send a notification to a specific segment with
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
 provide a `$url` parameter, users will be redirecting to that url.
 
+### Adding more parameters on root level
+
+You can add a body parameter on all above functions if you want to add more parameters (see [Common Parameters section in OneSignal documentation](https://documentation.onesignal.com/reference/create-notification#common-parameters) for more information).
+
 ### Sending a Custom Notification
 
 You can send a custom message with 

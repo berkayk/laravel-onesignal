@@ -132,7 +132,7 @@ class OneSignalClient
         return $this;
     }
 
-    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationToUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $body = null) {
         $contents = array(
             "en" => $message
         );
@@ -171,6 +171,10 @@ class OneSignalClient
             );
         }
 
+        if(isset($body)){
+            $params = array_merge($params, $body);
+        }
+
         $this->sendNotificationCustom($params);
     }
 
@@ -184,7 +188,7 @@ class OneSignalClient
      * @param null $headings
      * @param null $subtitle
      */
-    public function sendNotificationToExternalUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationToExternalUser($message, $userId, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $body = null) {
         $contents = array(
             "en" => $message
         );
@@ -223,9 +227,13 @@ class OneSignalClient
             );
         }
 
+        if(isset($body)){
+            $params = array_merge($params, $body);
+        }
+
         $this->sendNotificationCustom($params);
     }
-    public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $body = null) {
         $contents = array(
             "en" => $message
         );
@@ -264,10 +272,14 @@ class OneSignalClient
             );
         }
 
+        if(isset($body)){
+            $params = array_merge($params, $body);
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $body = null) {
         $contents = array(
             "en" => $message
         );
@@ -306,10 +318,14 @@ class OneSignalClient
             );
         }
 
+        if(isset($body)){
+            $params = array_merge($params, $body);
+        }
+
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationToSegment($message, $segment, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $body = null) {
         $contents = array(
             "en" => $message
         );
@@ -346,6 +362,10 @@ class OneSignalClient
             $params['subtitle'] = array(
                 "en" => $subtitle
             );
+        }
+
+        if(isset($body)){
+            $params = array_merge($params, $body);
         }
 
         $this->sendNotificationCustom($params);
