@@ -1,5 +1,5 @@
 {
-  "name": "ander890/onesignal-laravel",
+  "name": "berkayk/onesignal-laravel",
   "description": "OneSignal Push Wrapper Laravel",
   "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
   "type": "library",
