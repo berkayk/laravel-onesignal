@@ -267,7 +267,7 @@ class OneSignalClient
         $this->sendNotificationCustom($params);
     }
 
-    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
+    public function sendNotificationToAll($message, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null, $image = null) {
         $contents = array(
             "en" => $message
         );
@@ -304,6 +304,11 @@ class OneSignalClient
             $params['subtitle'] = array(
                 "en" => $subtitle
             );
+        }
+        
+        if(isset($image)){
+            $params['big_picture'] = $image;
+            $params['chrome_web_image'] = $image;
         }
 
         $this->sendNotificationCustom($params);
