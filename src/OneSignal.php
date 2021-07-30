@@ -2,7 +2,6 @@
 
 namespace Berkayk\OneSignal;
 
-use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -37,6 +36,6 @@ class OneSignal extends Facade {
      */
     protected static function getFacadeAccessor()
     {
-        return Factory::class;
+        return 'onesignal';
     }
 }
