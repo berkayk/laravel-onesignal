@@ -69,7 +69,13 @@ class OneSignalClient
         return $this;
     }
 
-    public function __construct($appId, $restApiKey, $userAuthKey)
+    /**
+     * @param $appId
+     * @param $restApiKey
+     * @param $userAuthKey
+     * @param int $guzzleClientTimeout
+     */
+    public function __construct($appId, $restApiKey, $userAuthKey, $guzzleClientTimeout = 0)
     {
         $this->appId = $appId;
         $this->restApiKey = $restApiKey;
@@ -77,6 +83,7 @@ class OneSignalClient
 
         $this->client = new Client([
             'handler' => $this->createGuzzleHandler(),
+            'timeout' => $guzzleClientTimeout,
         ]);
         $this->headers = ['headers' => []];
         $this->additionalParams = [];
