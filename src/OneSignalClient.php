@@ -382,7 +382,7 @@ class OneSignalClient
 
         // Make sure to use included_segments
         if (empty($parameters['included_segments']) && empty($parameters['include_player_ids'])) {
-            $parameters['included_segments'] = ['all'];
+            $parameters['included_segments'] = ['All'];
         }
 
         $parameters = array_merge($parameters, $this->additionalParams);
