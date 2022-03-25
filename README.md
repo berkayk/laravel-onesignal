@@ -67,6 +67,11 @@ You need to fill in your OneSignal *App ID* and *REST API Key* inside your
 ONESIGNAL_APP_ID=xxxxxxxxxxxxxxxxxxxx
 ONESIGNAL_REST_API_KEY=xxxxxxxxxxxxxxxxxx
 ```
+You can control timeout of the Guzzle client used by OneSignalClient by adding following into your .env file
+```
+ONESIGNAL_GUZZLE_CLIENT_TIMEOUT=integer_value
+```
+This param is useful when you are planning to send push notification via [Laravel queues](https://divinglaravel.com/always-set-a-timeout-for-guzzle-requests-inside-a-queued-job) 
 
 ## Usage
 

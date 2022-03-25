@@ -36,9 +36,7 @@ class OneSignalServiceProvider extends ServiceProvider
                 $config = $app['config']['onesignal'] ?: $app['config']['onesignal::config'];
             }
 
-            $client = new OneSignalClient($config['app_id'], $config['rest_api_key'], $config['user_auth_key']);
-
-            return $client;
+            return new OneSignalClient($config['app_id'], $config['rest_api_key'], $config['user_auth_key'] , $config['guzzle_client_timeout']);
         });
 
         $this->app->alias('onesignal', 'Berkayk\OneSignal\OneSignalClient');
