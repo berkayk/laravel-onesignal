@@ -147,7 +147,7 @@ class OneSignalClient
         $params = array(
             'app_id' => $this->appId,
             'contents' => $contents,
-            'include_player_ids' => is_array($userId) ? $userId : array($userId)
+            'include_player_ids' => $this->transformUserId($userId)
         );
 
         if (isset($url)) {
@@ -171,7 +171,7 @@ class OneSignalClient
                 "en" => $headings
             );
         }
-        
+
         if(isset($subtitle)){
             $params['subtitle'] = array(
                 "en" => $subtitle
@@ -199,7 +199,7 @@ class OneSignalClient
         $params = array(
             'app_id' => $this->appId,
             'contents' => $contents,
-            'include_external_user_ids' => is_array($userId) ? $userId : array($userId)
+            'include_external_user_ids' => $this->transformUserId($userId)
         );
 
         if (isset($url)) {
@@ -264,7 +264,7 @@ class OneSignalClient
                 "en" => $headings
             );
         }
-        
+
         if(isset($subtitle)){
             $params['subtitle'] = array(
                 "en" => $subtitle
@@ -306,7 +306,7 @@ class OneSignalClient
                 "en" => $headings
             );
         }
-        
+
         if(isset($subtitle)){
             $params['subtitle'] = array(
                 "en" => $subtitle
@@ -348,7 +348,7 @@ class OneSignalClient
                 "en" => $headings
             );
         }
-        
+
         if(isset($subtitle)){
             $params['subtitle'] = array(
                 "en" => $subtitle
@@ -415,7 +415,7 @@ class OneSignalClient
         $this->usesJSON();
 
         $endpoint = self::ENDPOINT_NOTIFICATIONS;
-        
+
         if(!$app_id) {
             $app_id = $this->appId;
         }
@@ -530,5 +530,20 @@ class OneSignalClient
             return (is_callable($this->requestCallback) ? $promise->then($this->requestCallback) : $promise);
         }
         return $this->client->delete(self::API_URL . $endPoint, $this->headers);
+    }
+
+    /**
+     * Transformed user_id as array string.
+     *
+     * @param  mixed  $userId
+     * @return array
+     */
+    private function transformUserId($userId)
+    {
+        $array = is_array($userId) ? $userId : array($userId);
+
+        return array_map(function ($item) {
+            return (string)$item;
+        }, $array);
     }
 }
