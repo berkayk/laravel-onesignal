@@ -10,7 +10,8 @@
     "symfony/psr-http-message-bridge": "1.*|2.*"
   },
   "require-dev": {
-    "vlucas/phpdotenv": "^2.2"
+    "vlucas/phpdotenv": "^2.2",
+    "pestphp/pest": "^1.21"
   },
   "autoload": {
     "psr-4": {
@@ -40,5 +41,5 @@
     }
   ],
   "minimum-stability": "dev",
-  "prefer-stable": true 
+  "prefer-stable": true
 }

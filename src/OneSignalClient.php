@@ -184,7 +184,11 @@ class OneSignalClient
             );
         }
 
-        return $this->sendNotificationCustom($params);
+        $response = $this->sendNotificationCustom($params);
+
+        $body = $response->getBody();
+
+        return json_decode($body->getContents());
     }
 
     /**
