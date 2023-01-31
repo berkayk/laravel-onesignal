@@ -1,44 +1,50 @@
 {
-  "name": "berkayk/onesignal-laravel",
-  "description": "OneSignal Push Wrapper Laravel",
-  "keywords": ["onesignal", "webpush", "push", "laravel", "laravel 5"],
-  "type": "library",
-  "require": {
-    "php": ">=5.4.0",
-    "guzzlehttp/guzzle": "^6.2|^7.4.1",
-    "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0",
-    "symfony/psr-http-message-bridge": "1.*|2.*"
-  },
-  "require-dev": {
-    "vlucas/phpdotenv": "^2.2"
-  },
-  "autoload": {
-    "psr-4": {
-      "Berkayk\\OneSignal\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Berkayk\\OneSignal\\OneSignalServiceProvider"
-      ],
-      "aliases": {
-        "OneSignal": "Berkayk\\OneSignal\\OneSignalFacade"
-      }
-    }
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Berkay Kaya",
-      "email": "berkayk@gmail.com",
-      "homepage": "http://berkaykaya.com"
+    "name": "berkayk/onesignal-laravel",
+    "description": "OneSignal Push Wrapper Laravel",
+    "keywords": [
+        "onesignal",
+        "webpush",
+        "push",
+        "laravel",
+        "laravel 5"
+    ],
+    "type": "library",
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "^6.2|^7.4.1|^7.2",
+        "illuminate/support": "~5.5|~6.0|~7.0|~8.0|~9.0|^10.0",
+        "symfony/psr-http-message-bridge": "1.*|2.*"
     },
-    {
-      "name": "Maykonn Welington Candido",
-      "email": "maykonn@outlook.com"
-    }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true 
+    "require-dev": {
+        "vlucas/phpdotenv": "^2.2|^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Berkayk\\OneSignal\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Berkayk\\OneSignal\\OneSignalServiceProvider"
+            ],
+            "aliases": {
+                "OneSignal": "Berkayk\\OneSignal\\OneSignalFacade"
+            }
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Berkay Kaya",
+            "email": "berkayk@gmail.com",
+            "homepage": "http://berkaykaya.com"
+        },
+        {
+            "name": "Maykonn Welington Candido",
+            "email": "maykonn@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
