@@ -388,7 +388,7 @@ class OneSignalClient
         }
 
         // Make sure to use included_segments
-        if (empty($parameters['included_segments']) && empty($parameters['include_player_ids']) && empty('include_external_user_ids')) {
+        if (empty($parameters['included_segments']) && empty($parameters['include_player_ids']) && empty($parameters['include_external_user_ids'])) {
             $parameters['included_segments'] = ['All'];
         }
 
