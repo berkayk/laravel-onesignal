@@ -89,8 +89,8 @@ You can easily send a message to all registered users with the command
     );
 ```
     
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
-provide a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you 
+provide a `$url` parameter, users will be redirected to that url.
     
 
 ### Sending a Notification based on Tags/Filters
@@ -132,7 +132,7 @@ You can send a message based on a set of tags with the command
 
 ### Sending a Notification To A Specific User
 
-After storing a user's tokens in a table, you can simply send a message with
+After storing a user's token in a table, you can simply send a message with
 
 ```php
     OneSignal::sendNotificationToUser(
@@ -147,14 +147,14 @@ After storing a user's tokens in a table, you can simply send a message with
     
 `$userId` is the user's unique id where he/she is registered for notifications. 
 Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide 
-a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you provide 
+a `$url` parameter, users will be redirected to that url.
 
 
 
 ### Sending a Notification To A Specific external User (custom user id added by user)
 
-After storing a user's tokens in a table, you can simply send a message with
+After storing a user's token in a table, you can simply send a message with
 
 ```php
     OneSignal::sendNotificationToExternalUser(
@@ -170,7 +170,7 @@ After storing a user's tokens in a table, you can simply send a message with
 `$userId` is the user's unique external id (custom id) added by the user where he/she is registered for notifications.
 Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you provide
-a `$url` parameter, users will be redirecting to that url.
+a `$url` parameter, users will be redirected to that url.
 
 ### Sending a Notification To Segment
 
@@ -187,8 +187,8 @@ You can simply send a notification to a specific segment with
     );
 ```
     
-`$url` , `$data` , `$buttons` and `$schedule` fields are exceptional. If you 
-provide a `$url` parameter, users will be redirecting to that url.
+`$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you 
+provide a `$url` parameter, users will be redirected to that url.
 
 ### Sending a Custom Notification
 
@@ -237,7 +237,7 @@ OneSignal::addParams($params)->sendNotificationToAll($message);
 
 ### 2. Sending a message with high priority
 
-This time, we will specify parameters one by one.
+This time, we will specify parameters one after the other.
 
 ```php
 use OneSignal;
