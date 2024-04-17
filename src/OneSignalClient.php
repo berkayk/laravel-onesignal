@@ -427,7 +427,7 @@ class OneSignalClient
         }
 
         if($offset) {
-            $endpoint.="&offset=".$$offset;
+            $endpoint.="&offset=".$offset;
         }
 
         return $this->get($endpoint);
