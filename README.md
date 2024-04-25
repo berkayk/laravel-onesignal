@@ -85,12 +85,16 @@ You can easily send a message to all registered users with the command
         $url = null, 
         $data = null, 
         $buttons = null, 
-        $schedule = null
+        $schedule = null,
+        $headings = null,
+        $subtitle = null,
+        $ios_badgeType = null,
+        $ios_badgeCount = null
     );
 ```
     
-`$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you 
-provide a `$url` parameter, users will be redirected to that url.
+`$url` , `$data` , `$buttons`, `$schedule`, `$headings`, `$subtitle`, `$ios_badgeType`, and `$ios_badgeCount` fields are optional. If you 
+provide a `$url` parameter, users will be redirected to that url. `$ios_badgeType` can be set to "None", "SetTo", or "Increase", determining how the badge number should be modified and `$ios_badgeCount` is the integer value to set the badge to, or the amount by which to increase or decrease it (you can use a negative integer to decrease), depending on the badge type set.
     
 
 ### Sending a Notification based on Tags/Filters
@@ -141,14 +145,18 @@ After storing a user's token in a table, you can simply send a message with
         $url = null,
         $data = null,
         $buttons = null,
-        $schedule = null
+        $schedule = null,
+        $headings = null,
+        $subtitle = null,
+        $ios_badgeType = null,
+        $ios_badgeCount = null
     );
 ```
     
 `$userId` is the user's unique id where he/she is registered for notifications. 
 Read https://documentation.onesignal.com/docs/add-user-data-tags for additional details.
 `$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you provide 
-a `$url` parameter, users will be redirected to that url.
+a `$url` parameter, users will be redirected to that url. `$ios_badgeType` can be set to "None", "SetTo", or "Increase", determining how the badge number should be modified and `$ios_badgeCount` is the integer value to set the badge to, or the amount by which to increase or decrease it (you can use a negative integer to decrease), depending on the badge type set.
 
 
 
@@ -163,7 +171,11 @@ After storing a user's token in a table, you can simply send a message with
         $url = null,
         $data = null,
         $buttons = null,
-        $schedule = null
+        $schedule = null,
+        $headings = null,
+        $subtitle = null,
+        $ios_badgeType = null,
+        $ios_badgeCount = null
     );
 ```
 
@@ -188,7 +200,7 @@ You can simply send a notification to a specific segment with
 ```
     
 `$url` , `$data` , `$buttons` and `$schedule` fields are optional. If you 
-provide a `$url` parameter, users will be redirected to that url.
+provide a `$url` parameter, users will be redirected to that url. `$ios_badgeType` can be set to "None", "SetTo", or "Increase", determining how the badge number should be modified and `$ios_badgeCount` is the integer value to set the badge to, or the amount by which to increase or decrease it (you can use a negative integer to decrease), depending on the badge type set.
 
 ### Sending a Custom Notification
 
@@ -288,3 +300,5 @@ $params['delivery_time_of_day'] = "2:30PM"; // Delivery time
 OneSignal::sendNotificationCustom($params);
 
 ```
+
+
