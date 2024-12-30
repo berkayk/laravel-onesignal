@@ -7,6 +7,7 @@ $dotenv->load();
 
 $client = new Berkayk\OneSignal\OneSignalClient(
     getenv('APP_ID'),
+    getenv('REST_API_URL'),
     getenv('REST_API_KEY'),
     getenv('USER_AUTH_KEY'));
 

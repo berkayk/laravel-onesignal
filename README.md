@@ -61,9 +61,10 @@ your OneSignal authorization keys.
 
 ## Configuration
 
-You need to fill in your OneSignal *App ID* and *REST API Key* inside your
+You need to fill in your OneSignal *REST API URL* *App ID* and *REST API Key* inside your
 .env file like this:
 ```
+ONESIGNAL_REST_API_URL=https://api.onesignal.com
 ONESIGNAL_APP_ID=xxxxxxxxxxxxxxxxxxxx
 ONESIGNAL_REST_API_KEY=xxxxxxxxxxxxxxxxxx
 ```
