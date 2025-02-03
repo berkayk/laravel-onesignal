@@ -76,10 +76,10 @@ class OneSignalClient
      * @param $userAuthKey
      * @param int $guzzleClientTimeout
      */
-    public function __construct($appId, $restApiUrl, $restApiKey, $userAuthKey, $guzzleClientTimeout = 0)
+    public function __construct($appId, $restApiKey, $userAuthKey, $guzzleClientTimeout = 0, $restApiUrl = null)
     {
         $this->appId = $appId;
-        $this->restApiUrl = $restApiUrl;
+        $this->restApiUrl = $restApiUrl ?? config('onesignal.rest_api_url');
         $this->restApiKey = $restApiKey;
         $this->userAuthKey = $userAuthKey;
 
