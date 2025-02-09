@@ -397,7 +397,7 @@ class OneSignalClient
         $parameters = array_merge($parameters, $this->additionalParams);
 
         $this->headers['body'] = json_encode($parameters);
-        $this->headers['buttons'] = json_encode($parameters);
+        $this->headers['buttons'] = json_encode($parameters['buttons']);
         $this->headers['verify'] = false;
         return $this->post(self::ENDPOINT_NOTIFICATIONS);
     }
