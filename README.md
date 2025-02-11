@@ -131,6 +131,20 @@ You can send a message based on a set of tags with the command
     );
 ```
 
+### How To Get The User ID ($userId)
+
+To obtain the user ID, you must use the code below in the middle of the form, and it will be sent as OneSignalUserId, you can use it when logging in or ...
+
+```php
+    @include('OneSignal::userid')
+```
+include is this input :
+```html
+<input type="hidden" name="OneSignalUserId" id="OneSignalUserId">
+...
+
+```
+
 ### Sending a Notification To A Specific User
 
 After storing a user's token in a table, you can simply send a message with
