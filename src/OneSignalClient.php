@@ -70,11 +70,11 @@ class OneSignalClient
     }
 
     /**
-     * @param $appId
-     * @param $restApiUrl
-     * @param $restApiKey
-     * @param $userAuthKey
+     * @param string $appId
+     * @param string $restApiKey
+     * @param string $userAuthKey
      * @param int $guzzleClientTimeout
+     * @param string|null $restApiUrl
      */
     public function __construct($appId, $restApiKey, $userAuthKey, $guzzleClientTimeout = 0, $restApiUrl = null)
     {
