@@ -232,6 +232,11 @@ class OneSignalClient
             );
         }
 
+        // Make sure to select channel as "Push" with parameter "channel_for_external_user_ids"
+        if (!isset($params['channel_for_external_user_ids'])) {
+            $params['channel_for_external_user_ids'] = "push";
+        }
+
         $this->sendNotificationCustom($params);
     }
     public function sendNotificationUsingTags($message, $tags, $url = null, $data = null, $buttons = null, $schedule = null, $headings = null, $subtitle = null) {
